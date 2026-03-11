@@ -19,7 +19,7 @@ const Navbar = () => {
           <div className="flex items-center">
             <Link href="/" className="flex items-center hover:opacity-90 transition-opacity">
               <Image 
-                src="https://tennisconnect.eu/wp-content/uploads/2017/12/logo-incl-fotos-1024x157.png" 
+                src="https://soaacpusdhyxwucjhhpy.supabase.co/storage/v1/object/public/tennis%20connect%20kamp/tennos%20connect%20logo.png" 
                 alt="Tennis Connect" 
                 width={200}
                 height={31}

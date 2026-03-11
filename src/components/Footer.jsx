@@ -17,7 +17,7 @@ const Footer = () => {
           <div className="space-y-4">
             <Link href="/" className="inline-block">
               <Image 
-                src="https://tennisconnect.eu/wp-content/uploads/2017/12/logo-incl-fotos-1024x157.png" 
+                src="https://soaacpusdhyxwucjhhpy.supabase.co/storage/v1/object/public/tennis%20connect%20kamp/tennos%20connect%20logo.png" 
                 alt="Tennis Connect" 
                 width={150}
                 height={23}
