@@ -15,11 +15,6 @@ const MEDIA_ITEMS = [
     description: 'Vol energie op de tennis- of padelbaan. Training, spel en plezier.',
   },
   {
-    src: `${MEDIA_BASE}/bbq.jpg`,
-    title: 'BBQ en gezelligheid',
-    description: 'Samen eten en genieten. Een echte kampbeleving.',
-  },
-  {
     src: `${MEDIA_BASE}/chillen.jpg`,
     title: 'Samen chillen',
     description: 'Groepsfoto en sfeer van het kamp. Vriendschap en plezier staan centraal.',
