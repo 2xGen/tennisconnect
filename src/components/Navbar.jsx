@@ -43,7 +43,7 @@ const Navbar = () => {
                 href="/media" 
                 className="text-sm font-medium text-gray-700 hover:text-sky-600 transition-colors"
               >
-                Foto&apos;s
+                Sfeerimpressie
               </Link>
               <Link 
                 href="/inschrijven" 
@@ -85,7 +85,7 @@ const Navbar = () => {
                 onClick={() => setIsMenuOpen(false)}
                 className="block text-base font-medium text-gray-700 hover:text-sky-600 transition-colors"
               >
-                Foto&apos;s
+                Sfeerimpressie
               </Link>
               <Link
                 href="/inschrijven"
