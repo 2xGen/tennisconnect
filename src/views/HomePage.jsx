@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import {
@@ -33,7 +33,143 @@ const fadeInRight = {
   transition: { duration: 0.5 },
 };
 
+const SLIDESHOW_IMAGES = [
+  {
+    src: 'https://soaacpusdhyxwucjhhpy.supabase.co/storage/v1/object/public/tennis%20connect%20kamp/tennis.jpg',
+    alt: 'Kinderen in actie op de tennisbaan',
+  },
+  {
+    src: 'https://soaacpusdhyxwucjhhpy.supabase.co/storage/v1/object/public/tennis%20connect%20kamp/tennis%20activiteit.jpeg',
+    alt: 'Tennisactiviteit op het kamp',
+  },
+  {
+    src: 'https://soaacpusdhyxwucjhhpy.supabase.co/storage/v1/object/public/tennis%20connect%20kamp/tennis%20foto.jpeg',
+    alt: 'Tennis op het kamp',
+  },
+];
+
+const BRANDSTOF_SLIDESHOW_IMAGES = [
+  {
+    src: 'https://soaacpusdhyxwucjhhpy.supabase.co/storage/v1/object/public/tennis%20connect%20kamp/eten.jpg',
+    alt: 'Gedekte tafel, lunch en blije gezichten tijdens de pauze',
+  },
+  {
+    src: 'https://soaacpusdhyxwucjhhpy.supabase.co/storage/v1/object/public/tennis%20connect%20kamp/hamburger.jpg',
+    alt: 'Gezond menu en broodjes van de bakker',
+  },
+  {
+    src: 'https://soaacpusdhyxwucjhhpy.supabase.co/storage/v1/object/public/tennis%20connect%20kamp/brandstof%201.jpeg',
+    alt: 'Brandstof voor kampioenen',
+  },
+  {
+    src: 'https://soaacpusdhyxwucjhhpy.supabase.co/storage/v1/object/public/tennis%20connect%20kamp/brandstof%202.jpeg',
+    alt: 'Brandstof voor kampioenen',
+  },
+  {
+    src: 'https://soaacpusdhyxwucjhhpy.supabase.co/storage/v1/object/public/tennis%20connect%20kamp/brandstof%203.jpeg',
+    alt: 'Brandstof voor kampioenen',
+  },
+];
+
+const ACTION_SLIDESHOW_IMAGES = [
+  {
+    src: 'https://soaacpusdhyxwucjhhpy.supabase.co/storage/v1/object/public/tennis%20connect%20kamp/action.jpg',
+    alt: 'Actie naast de baan',
+  },
+  {
+    src: 'https://soaacpusdhyxwucjhhpy.supabase.co/storage/v1/object/public/tennis%20connect%20kamp/action%202.jpeg',
+    alt: 'Actie naast de baan',
+  },
+  {
+    src: 'https://soaacpusdhyxwucjhhpy.supabase.co/storage/v1/object/public/tennis%20connect%20kamp/action%203.jpeg',
+    alt: 'Actie naast de baan',
+  },
+  {
+    src: 'https://soaacpusdhyxwucjhhpy.supabase.co/storage/v1/object/public/tennis%20connect%20kamp/action%204.jpeg',
+    alt: 'Actie naast de baan',
+  },
+  {
+    src: 'https://soaacpusdhyxwucjhhpy.supabase.co/storage/v1/object/public/tennis%20connect%20kamp/action%205.jpeg',
+    alt: 'Actie naast de baan',
+  },
+];
+
+const FINALE_SLIDESHOW_IMAGES = [
+  {
+    src: 'https://soaacpusdhyxwucjhhpy.supabase.co/storage/v1/object/public/tennis%20connect%20kamp/finale%201.jpeg',
+    alt: 'Finale van het tenniskamp',
+  },
+  {
+    src: 'https://soaacpusdhyxwucjhhpy.supabase.co/storage/v1/object/public/tennis%20connect%20kamp/finale%202.jpeg',
+    alt: 'Finale van het tenniskamp',
+  },
+  {
+    src: 'https://soaacpusdhyxwucjhhpy.supabase.co/storage/v1/object/public/tennis%20connect%20kamp/finale%203.jpeg',
+    alt: 'Finale van het tenniskamp',
+  },
+  {
+    src: 'https://soaacpusdhyxwucjhhpy.supabase.co/storage/v1/object/public/tennis%20connect%20kamp/finale.jpeg',
+    alt: 'Finale van het tenniskamp',
+  },
+];
+
+const WAAROM_SLIDESHOW_IMAGES = [
+  {
+    src: 'https://soaacpusdhyxwucjhhpy.supabase.co/storage/v1/object/public/tennis%20connect%20kamp/waarom%201.jpeg',
+    alt: 'Waarom kiezen voor Tennis Connect Kamp',
+  },
+  {
+    src: 'https://soaacpusdhyxwucjhhpy.supabase.co/storage/v1/object/public/tennis%20connect%20kamp/waarom%203.jpeg',
+    alt: 'Waarom kiezen voor Tennis Connect Kamp',
+  },
+  {
+    src: 'https://soaacpusdhyxwucjhhpy.supabase.co/storage/v1/object/public/tennis%20connect%20kamp/waarom.jpeg',
+    alt: 'Waarom kiezen voor Tennis Connect Kamp',
+  },
+];
+
 export default function HomePage() {
+  const [slideIndex, setSlideIndex] = useState(0);
+  const [brandstofSlideIndex, setBrandstofSlideIndex] = useState(0);
+  const [actionSlideIndex, setActionSlideIndex] = useState(0);
+  const [finaleSlideIndex, setFinaleSlideIndex] = useState(0);
+  const [waaromSlideIndex, setWaaromSlideIndex] = useState(0);
+
+  useEffect(() => {
+    const id = setInterval(() => {
+      setSlideIndex((i) => (i + 1) % SLIDESHOW_IMAGES.length);
+    }, 3000);
+    return () => clearInterval(id);
+  }, []);
+
+  useEffect(() => {
+    const id = setInterval(() => {
+      setBrandstofSlideIndex((i) => (i + 1) % BRANDSTOF_SLIDESHOW_IMAGES.length);
+    }, 3000);
+    return () => clearInterval(id);
+  }, []);
+
+  useEffect(() => {
+    const id = setInterval(() => {
+      setActionSlideIndex((i) => (i + 1) % ACTION_SLIDESHOW_IMAGES.length);
+    }, 3000);
+    return () => clearInterval(id);
+  }, []);
+
+  useEffect(() => {
+    const id = setInterval(() => {
+      setFinaleSlideIndex((i) => (i + 1) % FINALE_SLIDESHOW_IMAGES.length);
+    }, 3000);
+    return () => clearInterval(id);
+  }, []);
+
+  useEffect(() => {
+    const id = setInterval(() => {
+      setWaaromSlideIndex((i) => (i + 1) % WAAROM_SLIDESHOW_IMAGES.length);
+    }, 3000);
+    return () => clearInterval(id);
+  }, []);
+
   return (
     <main className="overflow-x-hidden">
       {/* Eye-catcher */}
@@ -78,7 +214,28 @@ export default function HomePage() {
             transition={{ duration: 0.6 }}
             className="text-4xl md:text-6xl lg:text-7xl font-bold text-gray-900 mb-4"
           >
-            Het leukste Tennis & Padel kamp van Oostvoorne!
+            Het leukste{' '}
+            <motion.span
+              animate={{ color: ['#374151', '#4f46e5', '#2563eb', '#374151'] }}
+              transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
+            >
+              Tennis
+            </motion.span>
+            ,{' '}
+            <motion.span
+              animate={{ color: ['#374151', '#2563eb', '#6d28d9', '#374151'] }}
+              transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut', delay: 1.5 }}
+            >
+              Padel
+            </motion.span>
+            {' & '}
+            <motion.span
+              animate={{ color: ['#374151', '#6d28d9', '#4f46e5', '#374151'] }}
+              transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut', delay: 3 }}
+            >
+              Fun
+            </motion.span>{' '}
+            kamp van Voorne aan Zee!
           </motion.h1>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
@@ -130,6 +287,40 @@ export default function HomePage() {
         </motion.a>
       </section>
 
+      {/* Promo video section */}
+      <section className="py-16 md:py-24 bg-amber-400 scroll-mt-24">
+        <div className="container mx-auto px-4">
+          <motion.h2
+            className="text-3xl md:text-4xl font-bold text-amber-950 text-center mb-10"
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-40px' }}
+            transition={{ duration: 0.5 }}
+          >
+            Bekijk de sfeer van het kamp
+          </motion.h2>
+          <motion.div
+            className="max-w-4xl mx-auto"
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-60px' }}
+            transition={{ duration: 0.5 }}
+          >
+            <div className="rounded-2xl overflow-hidden shadow-2xl ring-4 ring-amber-950/20">
+              <video
+                className="w-full aspect-video object-cover"
+                src="https://soaacpusdhyxwucjhhpy.supabase.co/storage/v1/object/public/tennis%20connect%20kamp/promo.mp4"
+                controls
+                playsInline
+                preload="metadata"
+              >
+                <track kind="captions" />
+              </video>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
       {/* Section 1: Slaan, scoren en groeien */}
       <section id="verder" className="py-16 md:py-24 bg-amber-50 scroll-mt-24">
         <div className="container mx-auto px-4">
@@ -143,12 +334,16 @@ export default function HomePage() {
                 whileHover={{ scale: 1.04 }}
                 transition={{ duration: 0.3 }}
               >
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src="https://soaacpusdhyxwucjhhpy.supabase.co/storage/v1/object/public/tennis%20connect%20kamp/tennis.jpg"
-                  alt="Kinderen in actie op de tennis- of padelbaan"
-                  className="absolute inset-0 w-full h-full object-cover"
-                />
+                {SLIDESHOW_IMAGES.map((slide, i) => (
+                  /* eslint-disable-next-line @next/next/no-img-element */
+                  <img
+                    key={slide.src}
+                    src={slide.src}
+                    alt={slide.alt}
+                    className="absolute inset-0 w-full h-full object-cover transition-opacity duration-700"
+                    style={{ opacity: slideIndex === i ? 1 : 0, zIndex: slideIndex === i ? 1 : 0 }}
+                  />
+                ))}
               </motion.div>
             </motion.div>
             <motion.div {...fadeInRight}>
@@ -198,12 +393,19 @@ export default function HomePage() {
                 whileHover={{ scale: 1.04 }}
                 transition={{ duration: 0.3 }}
               >
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src="https://soaacpusdhyxwucjhhpy.supabase.co/storage/v1/object/public/tennis%20connect%20kamp/eten.jpg"
-                  alt="Gedekte tafel, lunch en blije gezichten tijdens de pauze"
-                  className="absolute inset-0 w-full h-full object-cover"
-                />
+                {BRANDSTOF_SLIDESHOW_IMAGES.map((slide, i) => (
+                  /* eslint-disable-next-line @next/next/no-img-element */
+                  <img
+                    key={slide.src}
+                    src={slide.src}
+                    alt={slide.alt}
+                    className="absolute inset-0 w-full h-full object-cover transition-opacity duration-700"
+                    style={{
+                      opacity: brandstofSlideIndex === i ? 1 : 0,
+                      zIndex: brandstofSlideIndex === i ? 1 : 0,
+                    }}
+                  />
+                ))}
               </motion.div>
             </motion.div>
           </div>
@@ -223,12 +425,25 @@ export default function HomePage() {
                 whileHover={{ scale: 1.04 }}
                 transition={{ duration: 0.3 }}
               >
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src="https://soaacpusdhyxwucjhhpy.supabase.co/storage/v1/object/public/tennis%20connect%20kamp/mee.jpg"
-                  alt="Groepsspellen, knutselen en creatieve activiteiten"
-                  className="absolute inset-0 w-full h-full object-cover"
-                />
+                {ACTION_SLIDESHOW_IMAGES.map((slide, i) => {
+                  const isCurrent = actionSlideIndex === i;
+                  const isNext =
+                    i === (actionSlideIndex + 1) % ACTION_SLIDESHOW_IMAGES.length;
+                  const isVisible = isCurrent || isNext;
+                  return (
+                    /* eslint-disable-next-line @next/next/no-img-element */
+                    <img
+                      key={slide.src}
+                      src={slide.src}
+                      alt={slide.alt}
+                      className="absolute inset-0 w-full h-full object-cover transition-opacity duration-700"
+                      style={{
+                        opacity: isVisible ? 1 : 0,
+                        zIndex: isCurrent ? 1 : 0,
+                      }}
+                    />
+                  );
+                })}
               </motion.div>
             </motion.div>
             <motion.div {...fadeInRight}>
@@ -273,12 +488,19 @@ export default function HomePage() {
                 whileHover={{ scale: 1.04 }}
                 transition={{ duration: 0.3 }}
               >
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src="https://soaacpusdhyxwucjhhpy.supabase.co/storage/v1/object/public/tennis%20connect%20kamp/nacht.jpg"
-                  alt="Kids en ouders vieren feest tijdens het slotstuk van het tenniskamp"
-                  className="absolute inset-0 w-full h-full object-cover"
-                />
+                {FINALE_SLIDESHOW_IMAGES.map((slide, i) => (
+                  /* eslint-disable-next-line @next/next/no-img-element */
+                  <img
+                    key={slide.src}
+                    src={slide.src}
+                    alt={slide.alt}
+                    className="absolute inset-0 w-full h-full object-cover transition-opacity duration-700"
+                    style={{
+                      opacity: finaleSlideIndex === i ? 1 : 0,
+                      zIndex: finaleSlideIndex === i ? 1 : 0,
+                    }}
+                  />
+                ))}
               </motion.div>
             </motion.div>
           </div>
@@ -377,12 +599,19 @@ export default function HomePage() {
                 whileHover={{ scale: 1.04 }}
                 transition={{ duration: 0.3 }}
               >
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src="https://soaacpusdhyxwucjhhpy.supabase.co/storage/v1/object/public/tennis%20connect%20kamp/chillen.jpg"
-                  alt="Groepsfoto van het kamp – kinderen ontspannen na een activiteit"
-                  className="absolute inset-0 w-full h-full object-cover"
-                />
+                {WAAROM_SLIDESHOW_IMAGES.map((slide, i) => (
+                  /* eslint-disable-next-line @next/next/no-img-element */
+                  <img
+                    key={slide.src}
+                    src={slide.src}
+                    alt={slide.alt}
+                    className="absolute inset-0 w-full h-full object-cover transition-opacity duration-700"
+                    style={{
+                      opacity: waaromSlideIndex === i ? 1 : 0,
+                      zIndex: waaromSlideIndex === i ? 1 : 0,
+                    }}
+                  />
+                ))}
               </motion.div>
             </motion.div>
           </div>

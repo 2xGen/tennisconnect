@@ -3,87 +3,34 @@
 import React from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { ArrowLeft, Camera, Heart } from 'lucide-react';
+import { ArrowLeft, Camera, Heart, Play } from 'lucide-react';
 
 const MEDIA_BASE =
   'https://soaacpusdhyxwucjhhpy.supabase.co/storage/v1/object/public/tennis%20connect%20kamp';
 
-const MEDIA_ITEMS = [
-  {
-    src: `${MEDIA_BASE}/action.jpg`,
-    title: 'Actie op de baan',
-    description: 'Vol energie op de tennis- of padelbaan. Training, spel en plezier.',
-  },
-  {
-    src: `${MEDIA_BASE}/chillen.jpg`,
-    title: 'Samen chillen',
-    description: 'Groepsfoto en sfeer van het kamp. Vriendschap en plezier staan centraal.',
-  },
-  {
-    src: `${MEDIA_BASE}/colors.jpg`,
-    title: 'Kleur en sfeer',
-    description: 'Het kamp in volle glorie. Herinneringen voor later.',
-  },
-  {
-    src: `${MEDIA_BASE}/e6a40d86-6352-44f0-88bf-d247ae52577a.jpg`,
-    title: 'Kampmoment',
-    description: 'Sfeerbeelden van het Tennis Connect kamp.',
-  },
-  {
-    src: `${MEDIA_BASE}/eten.jpg`,
-    title: 'Brandstof voor kampioenen',
-    description: 'Gedekte tafel, lunch en blije gezichten. Elke dag vers van de bakker, onbeperkt fruit en drinken.',
-  },
-  {
-    src: `${MEDIA_BASE}/hamburger.jpg`,
-    title: 'Lekker eten',
-    description: 'Genieten van een maaltijd samen. Gezelligheid en smaak.',
-  },
-  {
-    src: `${MEDIA_BASE}/klimmen.jpg`,
-    title: 'Klimmen en avontuur',
-    description: 'Middagactiviteiten: klimmen, spelen en ontdekken.',
-  },
-  {
-    src: `${MEDIA_BASE}/laser%20tag.jpg`,
-    title: 'Laser tag',
-    description: 'Teamspel en actie. Spannend en sportief.',
-  },
-  {
-    src: `${MEDIA_BASE}/mee.jpg`,
-    title: 'Meer dan alleen sport',
-    description: 'Middagactiviteiten, teambuilding en avonturen in het bos, de duinen en op het water.',
-  },
-  {
-    src: `${MEDIA_BASE}/nacht.jpg`,
-    title: 'Een finale om nooit te vergeten',
-    description: 'Feestelijke afsluiting samen met alle ouders. Een herinnering voor het hele gezin.',
-  },
-  {
-    src: `${MEDIA_BASE}/spel.jpg`,
-    title: 'Spel en plezier',
-    description: 'Samen spelen, lachen en herinneringen maken.',
-  },
-  {
-    src: `${MEDIA_BASE}/tafel%20tennis.jpg`,
-    title: 'Tafeltennis',
-    description: 'Naast tennis en padel ook tafeltennis. Voor iedereen wat wils.',
-  },
-  {
-    src: `${MEDIA_BASE}/tennis%20camp.jpg`,
-    title: 'Tennis Connect Kamp',
-    description: 'Het kamp in beeld. Tennis, padel en veel meer.',
-  },
-  {
-    src: `${MEDIA_BASE}/tennis.jpg`,
-    title: 'Slaan, scoren en groeien',
-    description: 'Kinderen in actie op de tennis- of padelbaan. Elke ochtend 2 uur training op eigen niveau.',
-  },
-  {
-    src: `${MEDIA_BASE}/toren.jpg`,
-    title: 'Toren en uitzicht',
-    description: 'Avontuur en ontdekking tijdens het kamp.',
-  },
+// All photos shown on the homepage (slideshows)
+const HOMEPAGE_IMAGES = [
+  `${MEDIA_BASE}/tennis.jpg`,
+  `${MEDIA_BASE}/tennis%20activiteit.jpeg`,
+  `${MEDIA_BASE}/tennis%20foto.jpeg`,
+  `${MEDIA_BASE}/eten.jpg`,
+  `${MEDIA_BASE}/hamburger.jpg`,
+  `${MEDIA_BASE}/brandstof%201.jpeg`,
+  `${MEDIA_BASE}/brandstof%202.jpeg`,
+  `${MEDIA_BASE}/brandstof%203.jpeg`,
+  `${MEDIA_BASE}/action.jpg`,
+  `${MEDIA_BASE}/action%202.jpeg`,
+  `${MEDIA_BASE}/action%203.jpeg`,
+  `${MEDIA_BASE}/action%204.jpeg`,
+  `${MEDIA_BASE}/action%205.jpeg`,
+  `${MEDIA_BASE}/finale%201.jpeg`,
+  `${MEDIA_BASE}/finale%202.jpeg`,
+  `${MEDIA_BASE}/finale%203.jpeg`,
+  `${MEDIA_BASE}/finale.jpeg`,
+  `${MEDIA_BASE}/waarom%201.jpeg`,
+  `${MEDIA_BASE}/waarom%203.jpeg`,
+  `${MEDIA_BASE}/waarom.jpeg`,
+  `${MEDIA_BASE}/chillen.jpg`,
 ];
 
 export default function MediaPage() {
@@ -97,7 +44,7 @@ export default function MediaPage() {
         }}
       />
 
-      <div className="container mx-auto px-4 max-w-4xl">
+      <div className="container mx-auto px-4 max-w-5xl">
         <motion.div
           initial={{ opacity: 0, x: -12 }}
           animate={{ opacity: 1, x: 0 }}
@@ -111,6 +58,39 @@ export default function MediaPage() {
             Terug naar home
           </Link>
         </motion.div>
+
+        {/* Video van vorig jaar */}
+        <motion.section
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.05 }}
+          className="mb-16"
+        >
+          <div className="rounded-2xl bg-white/80 backdrop-blur-sm p-6 md:p-8 shadow-lg border border-amber-100 text-center">
+            <div className="inline-flex items-center gap-2 text-amber-600 bg-amber-50 px-4 py-2 rounded-full text-sm font-medium mb-4">
+              <Play className="h-4 w-4" />
+              <span>Video</span>
+            </div>
+            <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-3">
+              Sfeerimpressie van vorig jaar
+            </h2>
+            <p className="text-gray-600 mb-6 max-w-2xl mx-auto">
+              Krijg een indruk van de sfeer op het kamp: tennis, padel, leuke middagactiviteiten en een gezellige feestelijke afsluiting. Zo zag het er vorig jaar uit — en dit jaar belooft het minstens net zo leuk te worden!
+            </p>
+            <div className="rounded-xl overflow-hidden shadow-xl ring-2 ring-amber-200/50">
+              <video
+                className="w-full aspect-video object-cover"
+                src={`${MEDIA_BASE}/promo.mp4`}
+                controls
+                playsInline
+                preload="metadata"
+                title="Sfeerfilm Tennis Connect Kamp vorig jaar"
+              >
+                <track kind="captions" />
+              </video>
+            </div>
+          </div>
+        </motion.section>
 
         <motion.header
           initial={{ opacity: 0, y: 16 }}
@@ -131,29 +111,21 @@ export default function MediaPage() {
           </p>
         </motion.header>
 
-        <ul className="space-y-16">
-          {MEDIA_ITEMS.map((item, index) => (
+        <ul className="grid grid-cols-3 gap-4">
+          {HOMEPAGE_IMAGES.map((src, index) => (
             <motion.li
-              key={item.src}
-              initial={{ opacity: 0, y: 24 }}
+              key={src}
+              initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.15 * index }}
-              className="bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-100"
+              transition={{ duration: 0.4, delay: 0.04 * index }}
+              className="rounded-xl overflow-hidden shadow-md bg-gray-100 aspect-[4/3]"
             >
-              <div className="relative aspect-[4/3] bg-gray-100">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={item.src}
-                  alt={item.title}
-                  className="absolute inset-0 w-full h-full object-cover"
-                />
-              </div>
-              <div className="p-6 md:p-8">
-                <h2 className="text-xl md:text-2xl font-bold text-gray-900 mb-2">
-                  {item.title}
-                </h2>
-                <p className="text-gray-600 leading-relaxed">{item.description}</p>
-              </div>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={src}
+                alt="Sfeerfoto van het Tennis Connect kamp"
+                className="w-full h-full object-cover"
+              />
             </motion.li>
           ))}
         </ul>
