@@ -22,10 +22,18 @@ export const metadata = {
     apple: 'https://toftennis.nl/wp-content/uploads/2024/04/TOF-logo.svg',
   },
   openGraph: {
-    title: 'Tennis & Padel Kamp Oostvoorne 2026 | Tennis Connect',
+    title: 'Het leukste Tennis, Padel & Fun kamp van Voorne aan Zee!',
     description: 'Het leukste Tennis & Padel zomerkamp van Oostvoorne. 4 dagen sport, creativiteit en vriendschap voor kids 6-12 jaar. 20-23 juli 2026.',
     type: 'website',
     locale: 'nl_NL',
+    images: [
+      {
+        url: 'https://soaacpusdhyxwucjhhpy.supabase.co/storage/v1/object/public/tennis%20connect%20kamp/tennis%20foto.jpeg',
+        width: 1200,
+        height: 630,
+        alt: 'Tennis Connect kamp',
+      },
+    ],
   },
 };
 
