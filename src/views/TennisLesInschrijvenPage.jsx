@@ -88,7 +88,7 @@ const highlights = [
 ];
 
 const WHATSAPP_NUMBER = '31622616535'; // +31 6 22616535 (digits only)
-const WHATSAPP_MESSAGE = 'Hoi Remco, ik wil graag tennisles (voorjaar 2026).';
+const WHATSAPP_MESSAGE = 'Hoi Remco, ik wil graag tennisles.';
 
 function SectionCard({ id, children, className = '' }) {
   return (
