@@ -45,12 +45,24 @@ const Navbar = () => {
               >
                 Sfeerimpressie
               </Link>
+              <Link
+                href="/inschrijven-tennis-les"
+                className="text-sm font-medium text-gray-700 hover:text-emerald-600 transition-colors"
+              >
+                Inschrijven tennisles
+              </Link>
+              <Link
+                href="/inschrijven-activiteit"
+                className="text-sm font-medium text-gray-700 hover:text-violet-600 transition-colors"
+              >
+                Inschrijven activiteit
+              </Link>
               <Link 
                 href="/inschrijven" 
-                className="text-sm font-bold px-4 py-2 rounded-lg text-white transition-all shadow-md hover:shadow-lg"
+                className="text-center text-xs lg:text-sm font-bold px-3 py-2 lg:px-4 rounded-lg text-white transition-all shadow-md hover:shadow-lg leading-snug max-w-[12rem] lg:max-w-none"
                 style={{ background: 'linear-gradient(135deg, #22c55e 0%, #4ade80 100%)' }}
               >
-                Meld je aan!
+                Meld je aan voor het tenniskamp
               </Link>
             </div>
           </nav>
@@ -88,11 +100,25 @@ const Navbar = () => {
                 Sfeerimpressie
               </Link>
               <Link
+                href="/inschrijven-tennis-les"
+                onClick={() => setIsMenuOpen(false)}
+                className="block text-base font-medium text-gray-700 hover:text-emerald-600 transition-colors"
+              >
+                Inschrijven tennisles
+              </Link>
+              <Link
+                href="/inschrijven-activiteit"
+                onClick={() => setIsMenuOpen(false)}
+                className="block text-base font-medium text-gray-700 hover:text-violet-600 transition-colors"
+              >
+                Inschrijven activiteit
+              </Link>
+              <Link
                 href="/inschrijven"
                 onClick={() => setIsMenuOpen(false)}
                 className="block text-base font-bold text-lime-600 hover:text-lime-700 transition-colors"
               >
-                Meld je aan!
+                Meld je aan voor het tenniskamp
               </Link>
             </div>
           </div>

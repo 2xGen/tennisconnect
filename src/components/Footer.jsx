@@ -64,6 +64,16 @@ const Footer = () => {
                 </Link>
               </li>
               <li>
+                <Link href="/inschrijven-tennis-les" className="text-gray-400 hover:text-emerald-400 transition-colors text-sm">
+                  Inschrijven tennisles
+                </Link>
+              </li>
+              <li>
+                <Link href="/inschrijven-activiteit" className="text-gray-400 hover:text-violet-400 transition-colors text-sm">
+                  Inschrijven activiteit
+                </Link>
+              </li>
+              <li>
                 <Link href="/inschrijven" className="text-gray-400 hover:text-amber-400 transition-colors text-sm">
                   Meld je aan
                 </Link>
