@@ -88,7 +88,7 @@ const highlights = [
 ];
 
 const WHATSAPP_NUMBER = '31622616535'; // +31 6 22616535 (digits only)
-const WHATSAPP_MESSAGE = 'Hoi Remco, ik heb een vraag over de tennisles inschrijving.';
+const WHATSAPP_MESSAGE = 'Hoi Remco, ik wil graag tennisles (voorjaar 2026).';
 
 function SectionCard({ id, children, className = '' }) {
   return (
@@ -133,9 +133,34 @@ export default function TennisLesInschrijvenPage() {
             <Calendar className="h-4 w-4 shrink-0" />
             <span>Voorjaar 2026 — jeugdlessen vanaf 2 februari</span>
           </div>
-          <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4 text-balance">
+          <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-5 text-balance">
             Inschrijven tennisles
           </h1>
+
+          <a
+            href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHATSAPP_MESSAGE)}`}
+            target="_blank"
+            rel="noreferrer"
+            aria-label="Schrijf je in voor tennisles via WhatsApp"
+            className="group mx-auto mb-6 flex max-w-md items-center gap-4 rounded-2xl border border-emerald-200/90 bg-white/95 px-4 py-4 text-left shadow-md shadow-emerald-900/5 backdrop-blur-sm transition hover:border-emerald-300 hover:shadow-lg hover:shadow-emerald-900/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 sm:px-5"
+          >
+            <span
+              className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[#25D366] text-white shadow-sm ring-4 ring-emerald-100"
+              aria-hidden
+            >
+              <MessageCircle className="h-6 w-6" strokeWidth={2} />
+            </span>
+            <span className="min-w-0 flex-1">
+              <span className="block font-semibold text-gray-900 sm:text-lg">
+                Schrijf je in voor tennisles
+              </span>
+              <span className="mt-0.5 block text-sm text-emerald-700">
+                Open WhatsApp — Remco helpt je verder
+              </span>
+            </span>
+            <ChevronRight className="h-5 w-5 shrink-0 text-gray-400 transition group-hover:translate-x-0.5 group-hover:text-emerald-600" aria-hidden />
+          </a>
+
           <p className="text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed text-pretty">
             Data, tarieven en rooster voor het voorjaar.
           </p>
@@ -506,7 +531,7 @@ export default function TennisLesInschrijvenPage() {
         bottom: 'max(1.25rem, env(safe-area-inset-bottom, 0px))',
         right: 'max(1rem, env(safe-area-inset-right, 0px))',
       }}
-      aria-label="WhatsApp Remco Van Reek over tennisles"
+      aria-label="WhatsApp Remco: aanmelden voor tennisles"
     >
       <MessageCircle className="h-6 w-6 shrink-0" aria-hidden />
       <span className="text-sm font-bold hidden sm:inline">WhatsApp Remco</span>
