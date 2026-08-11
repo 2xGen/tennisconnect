@@ -1,16 +1,51 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
-import { motion } from 'framer-motion';
+import Image from 'next/image';
+import { motion, AnimatePresence } from 'framer-motion';
 import {
-  CheckCircle2,
-  MapPin,
-  Calendar,
-  Clock,
-  Star,
   ChevronDown,
+  Sparkles,
+  Trophy,
+  Users,
+  MessageCircle,
+  Ruler,
 } from 'lucide-react';
+
+const GALLERY_IMAGES = [
+  {
+    src: 'https://iemgpccgdlwpsrsjuumo.supabase.co/storage/v1/object/public/TOF%20Sports/media%209.jpg',
+    alt: 'Kinderen met rackets bij Piramide Tennis op TVO Oostvoorne',
+  },
+  {
+    src: 'https://iemgpccgdlwpsrsjuumo.supabase.co/storage/v1/object/public/TOF%20Sports/media%208.jpg',
+    alt: 'Jeugdspeler in actie op de baan',
+  },
+  {
+    src: 'https://iemgpccgdlwpsrsjuumo.supabase.co/storage/v1/object/public/TOF%20Sports/media%202.jpg',
+    alt: 'Trainer en kinderen bij het TOF-bord tijdens de les',
+  },
+];
+
+const TOFSCORE_IMAGES = [
+  {
+    src: 'https://iemgpccgdlwpsrsjuumo.supabase.co/storage/v1/object/public/TOF%20Sports/de%20swirl%20500.jpeg',
+    alt: 'Kind verplaatst naammagneten op het TOF-bord met fases en levels',
+  },
+  {
+    src: 'https://iemgpccgdlwpsrsjuumo.supabase.co/storage/v1/object/public/TOF%20Sports/Scoreboard.jpeg',
+    alt: 'Kinderen bij het Tofscore-scorebord op de club',
+  },
+  {
+    src: 'https://toftennis.nl/wp-content/uploads/2021/05/e85e3afa-a4cd-4e9b-bd2f-eb4fd149df18-1024x768.jpg',
+    alt: 'Tenniskids spelerskaarten Rood, Oranje en Groen aan een TOF-koord',
+  },
+];
+
+const WHATSAPP_NUMBER = '31622616535';
+const WHATSAPP_MESSAGE =
+  'Hoi Remco, ik wil graag meer info over Kids Tennis / de proeflessen bij TVO Oostvoorne.';
 
 const fadeInUp = {
   initial: { opacity: 0, y: 28 },
@@ -19,753 +54,744 @@ const fadeInUp = {
   transition: { duration: 0.5 },
 };
 
-const fadeInLeft = {
-  initial: { opacity: 0, x: -32 },
-  whileInView: { opacity: 1, x: 0 },
-  viewport: { once: true, margin: '-40px' },
-  transition: { duration: 0.5 },
-};
-
-const fadeInRight = {
-  initial: { opacity: 0, x: 32 },
-  whileInView: { opacity: 1, x: 0 },
-  viewport: { once: true, margin: '-40px' },
-  transition: { duration: 0.5 },
-};
-
-const SLIDESHOW_IMAGES = [
+const CATEGORIES = [
   {
-    src: 'https://soaacpusdhyxwucjhhpy.supabase.co/storage/v1/object/public/tennis%20connect%20kamp/tennis.jpg',
-    alt: 'Kinderen in actie op de tennisbaan',
+    id: 'rood',
+    name: 'Tenniskids Rood',
+    short: 'Rood',
+    ages: 'Ca. 5 t/m 8/9 jaar',
+    agesBrief: '4 t/m 8 jaar',
+    court: 'Minibaan (6 × 12 m)',
+    ball: 'Grote, zachte rode bal',
+    racket: 'Korter racket (43–56 cm)',
+    time: '14:20 – 15:10 uur',
+    accent: '#DC2626',
+    soft: '#FEF2F2',
+    border: '#FECACA',
+    focus:
+      'Veel spelen, weinig stilstand. Gooien, vangen, voetenwerk, eerste slagen en leren tellen.',
+    learn: [
+      'Gooien, vangen en de balstuit leren inschatten',
+      'Eerste forehand en backhand over een laag net',
+      'Korte rally’s en de eerste spelregels',
+    ],
+    friday:
+      'Vooral speels: balvaardigheid, voetenwerk, tellen en samenwerken.',
   },
   {
-    src: 'https://soaacpusdhyxwucjhhpy.supabase.co/storage/v1/object/public/tennis%20connect%20kamp/tennis%20activiteit.jpeg',
-    alt: 'Tennisactiviteit op het kamp',
+    id: 'oranje',
+    name: 'Tenniskids Oranje',
+    short: 'Oranje',
+    ages: 'Ca. 8 t/m 11 jaar',
+    agesBrief: '8 t/m 11 jaar',
+    court: 'Driekwartbaan (18 m)',
+    ball: 'Oranje bal (zachter dan geel)',
+    racket: 'Gemiddeld racket (56–63,5 cm)',
+    time: '15:10 – 16:00 uur',
+    accent: '#EA580C',
+    soft: '#FFF7ED',
+    border: '#FED7AA',
+    focus:
+      'Meer echte tennis: rally’s, service, enkel en dubbel, en omgaan met winnen en verliezen.',
+    learn: [
+      'Bovenhandse service, smash en volley',
+      'Diep of kort spelen, hoeken zoeken, beter voetenwerk',
+      'Tiebreaks, enkel- en dubbelspel, communicatie met een partner',
+    ],
+    friday:
+      'Meer wedstrijdvorm: dubbel, tiebreaks, piramidetennis en conditie.',
   },
   {
-    src: 'https://soaacpusdhyxwucjhhpy.supabase.co/storage/v1/object/public/tennis%20connect%20kamp/tennis%20foto.jpeg',
-    alt: 'Tennis op het kamp',
-  },
-];
-
-const BRANDSTOF_SLIDESHOW_IMAGES = [
-  {
-    src: 'https://soaacpusdhyxwucjhhpy.supabase.co/storage/v1/object/public/tennis%20connect%20kamp/eten.jpg',
-    alt: 'Gedekte tafel, lunch en blije gezichten tijdens de pauze',
-  },
-  {
-    src: 'https://soaacpusdhyxwucjhhpy.supabase.co/storage/v1/object/public/tennis%20connect%20kamp/hamburger.jpg',
-    alt: 'Gezond menu en broodjes van de bakker',
-  },
-  {
-    src: 'https://soaacpusdhyxwucjhhpy.supabase.co/storage/v1/object/public/tennis%20connect%20kamp/brandstof%201.jpeg',
-    alt: 'Brandstof voor kampioenen',
-  },
-  {
-    src: 'https://soaacpusdhyxwucjhhpy.supabase.co/storage/v1/object/public/tennis%20connect%20kamp/brandstof%202.jpeg',
-    alt: 'Brandstof voor kampioenen',
-  },
-  {
-    src: 'https://soaacpusdhyxwucjhhpy.supabase.co/storage/v1/object/public/tennis%20connect%20kamp/brandstof%203.jpeg',
-    alt: 'Brandstof voor kampioenen',
-  },
-];
-
-const ACTION_SLIDESHOW_IMAGES = [
-  {
-    src: 'https://soaacpusdhyxwucjhhpy.supabase.co/storage/v1/object/public/tennis%20connect%20kamp/action.jpg',
-    alt: 'Actie naast de baan',
-  },
-  {
-    src: 'https://soaacpusdhyxwucjhhpy.supabase.co/storage/v1/object/public/tennis%20connect%20kamp/action%202.jpeg',
-    alt: 'Actie naast de baan',
-  },
-  {
-    src: 'https://soaacpusdhyxwucjhhpy.supabase.co/storage/v1/object/public/tennis%20connect%20kamp/action%203.jpeg',
-    alt: 'Actie naast de baan',
-  },
-  {
-    src: 'https://soaacpusdhyxwucjhhpy.supabase.co/storage/v1/object/public/tennis%20connect%20kamp/action%204.jpeg',
-    alt: 'Actie naast de baan',
-  },
-  {
-    src: 'https://soaacpusdhyxwucjhhpy.supabase.co/storage/v1/object/public/tennis%20connect%20kamp/action%205.jpeg',
-    alt: 'Actie naast de baan',
+    id: 'groen',
+    name: 'Tenniskids Groen',
+    short: 'Groen',
+    ages: 'Ca. 10 t/m 12 jaar',
+    agesBrief: '10 t/m 12 jaar',
+    court: 'Hele baan',
+    ball: 'Groene bal (iets zachter dan geel)',
+    racket: 'Racket 63,5–68 cm',
+    time: '16:00 – 16:50 uur',
+    accent: '#16A34A',
+    soft: '#F0FDF4',
+    border: '#BBF7D0',
+    focus:
+      'Wedstrijdtennis op de hele baan: harder slaan, slimmer spelen en toernooivormen.',
+    learn: [
+      'Topspin, slice, snellere services en passeerslagen',
+      'Zelf een speelplan maken, fair play en wedstrijdspanning',
+      'Conditie, wendbaarheid en herstel na een punt',
+    ],
+    friday:
+      'Wedstrijden: King of the Court, teampunten en mix-toernooitjes.',
   },
 ];
 
-const FINALE_SLIDESHOW_IMAGES = [
+const FRIDAY_PROGRAM = [
   {
-    src: 'https://soaacpusdhyxwucjhhpy.supabase.co/storage/v1/object/public/tennis%20connect%20kamp/finale%201.jpeg',
-    alt: 'Finale van het tenniskamp',
+    week: 1,
+    theme: 'Dubbelspel & Samenwerken',
+    rood: 'Racket-vanger/gooier, samen hooghouden, duospelletjes',
+    oranjeGroen: 'Positie op de baan, communicatie met partner, dubbeltactiek',
   },
   {
-    src: 'https://soaacpusdhyxwucjhhpy.supabase.co/storage/v1/object/public/tennis%20connect%20kamp/finale%202.jpeg',
-    alt: 'Finale van het tenniskamp',
+    week: 2,
+    theme: 'Enkelspel & Zelfstandigheid',
+    rood: 'Leren tellen (1-2-3-4/punten), baangrenzen verkennen',
+    oranjeGroen: 'Servicelijnen benutten, rallyopbouw, diep vs. kort spelen',
   },
   {
-    src: 'https://soaacpusdhyxwucjhhpy.supabase.co/storage/v1/object/public/tennis%20connect%20kamp/finale%203.jpeg',
-    alt: 'Finale van het tenniskamp',
+    week: 3,
+    theme: 'Tiebreak Toernooi',
+    rood: 'Aangepaste minigames, mikken op vakken voor punten',
+    oranjeGroen: 'Officiële tiebreak-vormen, omgaan met wedstrijdspanning',
   },
   {
-    src: 'https://soaacpusdhyxwucjhhpy.supabase.co/storage/v1/object/public/tennis%20connect%20kamp/finale.jpeg',
-    alt: 'Finale van het tenniskamp',
+    week: 4,
+    theme: 'Piramidetennis',
+    rood: "Ranglijst-spel op de minibaan, successen vieren",
+    oranjeGroen: "Uitdagen van hogere plekken op de 'ladder'",
+  },
+  {
+    week: 5,
+    theme: 'Service & Retour',
+    rood: 'Bovenhandse gooibeweging, balcoördinatie & vangen',
+    oranjeGroen: 'Bovenhandse service, inslaan en retourneren van snelle ballen',
+  },
+  {
+    week: 6,
+    theme: 'Conditie & Behendigheid',
+    rood: 'Voetenwerk-parcours, reactie- en vangspellen',
+    oranjeGroen: 'Agility-ladders, herstelvoetenwerk, conditie-games',
+  },
+  {
+    week: 7,
+    theme: 'King of the Court',
+    rood: 'Afvalrace op minibaan, continu doordraaien',
+    oranjeGroen: 'King of the Court (enkel & dubbel) onder tijdsdruk',
+  },
+  {
+    week: 8,
+    theme: 'Richting & Doelraken',
+    rood: 'Targets en doelen omver spelen, balcontrole',
+    oranjeGroen: 'Hoeken zoeken, vaart maken vs. controle houden',
+  },
+  {
+    week: 9,
+    theme: 'Tactiek & Slim Spelen',
+    rood: "'Slimme ballen' (hoog/laag, zacht/hard afwisselen)",
+    oranjeGroen: 'Tegenstander weglokken, de zwakke plek opzoeken',
+  },
+  {
+    week: 10,
+    theme: 'Tellen & Fair Play',
+    rood: 'Zelf stand bijhouden, eerlijk uit/in roepen',
+    oranjeGroen: 'Zelfstandig wedstrijden leiden, arbitrage, sportiviteit',
+  },
+  {
+    week: 11,
+    theme: 'Team Challenge',
+    rood: 'Rood-teamgames (estafette + tenniselementen)',
+    oranjeGroen: 'Groepscompetitie, samen teampunten verzamelen',
+  },
+  {
+    week: 12,
+    theme: 'Fun-toernooi',
+    rood: 'Spelletjes met belemmeringen (bijv. 1 hand, obstakels)',
+    oranjeGroen: 'Mix-toernooi (Oranje & Groen door elkaar)',
+  },
+  {
+    week: 13,
+    theme: 'Finale & Diploma-uitreiking',
+    rood: "Feestelijke afsluiting, minitoernooitje, diploma's",
+    oranjeGroen: 'Finalewedstrijden, prijsuitreiking & feestelijke afsluiting',
   },
 ];
 
-const WAAROM_SLIDESHOW_IMAGES = [
-  {
-    src: 'https://soaacpusdhyxwucjhhpy.supabase.co/storage/v1/object/public/tennis%20connect%20kamp/waarom%201.jpeg',
-    alt: 'Waarom kiezen voor Tennis Connect Kamp',
-  },
-  {
-    src: 'https://soaacpusdhyxwucjhhpy.supabase.co/storage/v1/object/public/tennis%20connect%20kamp/waarom%203.jpeg',
-    alt: 'Waarom kiezen voor Tennis Connect Kamp',
-  },
-  {
-    src: 'https://soaacpusdhyxwucjhhpy.supabase.co/storage/v1/object/public/tennis%20connect%20kamp/waarom.jpeg',
-    alt: 'Waarom kiezen voor Tennis Connect Kamp',
-  },
-];
-
-export default function HomePage() {
-  const [slideIndex, setSlideIndex] = useState(0);
-  const [brandstofSlideIndex, setBrandstofSlideIndex] = useState(0);
-  const [actionSlideIndex, setActionSlideIndex] = useState(0);
-  const [finaleSlideIndex, setFinaleSlideIndex] = useState(0);
-  const [waaromSlideIndex, setWaaromSlideIndex] = useState(0);
-
-  useEffect(() => {
-    const id = setInterval(() => {
-      setSlideIndex((i) => (i + 1) % SLIDESHOW_IMAGES.length);
-    }, 3000);
-    return () => clearInterval(id);
-  }, []);
-
-  useEffect(() => {
-    const id = setInterval(() => {
-      setBrandstofSlideIndex((i) => (i + 1) % BRANDSTOF_SLIDESHOW_IMAGES.length);
-    }, 3000);
-    return () => clearInterval(id);
-  }, []);
-
-  useEffect(() => {
-    const id = setInterval(() => {
-      setActionSlideIndex((i) => (i + 1) % ACTION_SLIDESHOW_IMAGES.length);
-    }, 3000);
-    return () => clearInterval(id);
-  }, []);
-
-  useEffect(() => {
-    const id = setInterval(() => {
-      setFinaleSlideIndex((i) => (i + 1) % FINALE_SLIDESHOW_IMAGES.length);
-    }, 3000);
-    return () => clearInterval(id);
-  }, []);
-
-  useEffect(() => {
-    const id = setInterval(() => {
-      setWaaromSlideIndex((i) => (i + 1) % WAAROM_SLIDESHOW_IMAGES.length);
-    }, 3000);
-    return () => clearInterval(id);
-  }, []);
+function CategoryAccordion() {
+  const [openId, setOpenId] = useState('rood');
 
   return (
-    <main className="overflow-x-hidden">
-      {/* Eye-catcher */}
-      <section
-        className="text-white py-4 px-4 text-center relative overflow-hidden"
-        style={{
-          background: 'linear-gradient(90deg, #22c55e 0%, #4ade80 25%, #fbbf24 50%, #fb923c 75%, #38bdf8 100%)',
-        }}
-      >
-        <motion.div
-          className="absolute inset-0 opacity-30"
-          style={{
-            background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent)',
-            backgroundSize: '200% 100%',
-          }}
-          animate={{ backgroundPosition: ['0% 50%', '200% 50%'] }}
-          transition={{ duration: 3, repeat: Infinity, repeatType: 'loop' }}
-        />
-        <motion.p
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="relative z-10 text-xl md:text-2xl font-bold max-w-4xl mx-auto drop-shadow-sm"
-        >
-          Wij hebben lol, terwijl jullie op kantoor zitten!
-        </motion.p>
-      </section>
+    <div className="space-y-0 divide-y divide-gray-200 border-y border-gray-200">
+      {CATEGORIES.map((cat) => {
+        const open = openId === cat.id;
+        return (
+          <div key={cat.id}>
+            <button
+              type="button"
+              onClick={() => setOpenId(open ? null : cat.id)}
+              className="flex w-full items-start gap-4 py-5 text-left transition-colors hover:bg-gray-50/80 md:gap-6 md:py-6"
+              aria-expanded={open}
+            >
+              <span
+                className="mt-1.5 h-10 w-1.5 shrink-0 rounded-full"
+                style={{ background: cat.accent }}
+                aria-hidden
+              />
+              <span className="min-w-0 flex-1">
+                <span
+                  className="block text-xl font-bold md:text-2xl"
+                  style={{ color: cat.accent }}
+                >
+                  {cat.name}
+                </span>
+                <span className="mt-1 block text-sm text-gray-600 md:text-base">
+                  {cat.agesBrief} · {cat.court.split('(')[0].trim()} · Vrijdag {cat.time}
+                </span>
+              </span>
+              <ChevronDown
+                className={`mt-2 h-5 w-5 shrink-0 text-gray-400 transition-transform ${open ? 'rotate-180' : ''}`}
+              />
+            </button>
 
+            <AnimatePresence initial={false}>
+              {open && (
+                <motion.div
+                  initial={{ height: 0, opacity: 0 }}
+                  animate={{ height: 'auto', opacity: 1 }}
+                  exit={{ height: 0, opacity: 0 }}
+                  transition={{ duration: 0.28 }}
+                  className="overflow-hidden"
+                >
+                  <div className="pb-7 pl-6 md:pl-8">
+                    <p className="max-w-2xl text-base leading-relaxed text-gray-700">
+                      {cat.focus}
+                    </p>
+                    <p className="mt-4 text-sm leading-relaxed text-gray-600">
+                      <span className="font-semibold text-gray-800">Baan &amp; materiaal:</span>{' '}
+                      {cat.court}, {cat.ball.toLowerCase()}, {cat.racket.toLowerCase()}.
+                    </p>
+                    <p className="mt-3 text-sm font-semibold text-gray-800">Wat ze leren</p>
+                    <ul className="mt-2 max-w-2xl space-y-1.5">
+                      {cat.learn.map((line) => (
+                        <li key={line} className="text-sm leading-relaxed text-gray-600">
+                          · {line}
+                        </li>
+                      ))}
+                    </ul>
+                    <p className="mt-4 text-sm leading-relaxed text-gray-600">
+                      <span className="font-semibold text-gray-800">
+                        Vrijdag Speelmoment ({cat.time}):
+                      </span>{' '}
+                      {cat.friday}
+                    </p>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
+export default function HomePage() {
+  return (
+    <main className="overflow-x-hidden">
       {/* Hero */}
-      <section className="relative min-h-[85vh] flex items-center justify-center overflow-hidden pt-24 pb-16">
+      <section className="relative min-h-[92vh] flex items-end md:items-center overflow-hidden pt-20">
+        <div
+          className="absolute inset-0 bg-cover bg-center"
+          style={{
+            backgroundImage:
+              "url('https://iemgpccgdlwpsrsjuumo.supabase.co/storage/v1/object/public/TOF%20Sports/un%20dos%20tres%20500.jpg')",
+          }}
+        />
         <div
           className="absolute inset-0"
           style={{
             background:
-              'linear-gradient(135deg, rgba(254,240,138,0.4) 0%, rgba(187,247,208,0.4) 40%, rgba(191,219,254,0.4) 70%, rgba(253,224,71,0.2) 100%)',
+              'linear-gradient(180deg, rgba(15,23,42,0.35) 0%, rgba(15,23,42,0.55) 45%, rgba(15,23,42,0.88) 100%)',
           }}
         />
-        <div className="container mx-auto px-4 relative z-10 text-center">
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
+        <div
+          className="pointer-events-none absolute inset-0 opacity-40"
+          style={{
+            background:
+              'radial-gradient(ellipse at 20% 20%, rgba(220,38,38,0.35), transparent 45%), radial-gradient(ellipse at 80% 30%, rgba(234,88,12,0.3), transparent 40%), radial-gradient(ellipse at 60% 80%, rgba(22,163,74,0.28), transparent 45%)',
+          }}
+        />
+
+        <div className="container relative z-10 mx-auto px-4 pb-16 pt-28 md:pb-24 md:pt-32">
+          <motion.p
+            initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="text-4xl md:text-6xl lg:text-7xl font-bold text-gray-900 mb-4"
+            transition={{ duration: 0.5 }}
+            className="mb-3 text-sm font-semibold uppercase tracking-[0.2em] text-white/80"
           >
-            Het leukste{' '}
-            <motion.span
-              animate={{ color: ['#374151', '#4f46e5', '#2563eb', '#374151'] }}
-              transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
-            >
-              Tennis
-            </motion.span>
-            ,{' '}
-            <motion.span
-              animate={{ color: ['#374151', '#2563eb', '#6d28d9', '#374151'] }}
-              transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut', delay: 1.5 }}
-            >
-              Padel
-            </motion.span>
-            {' & '}
-            <motion.span
-              animate={{ color: ['#374151', '#6d28d9', '#4f46e5', '#374151'] }}
-              transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut', delay: 3 }}
-            >
-              Fun
-            </motion.span>{' '}
-            kamp van Voorne aan Zee!
+            TVO Oostvoorne · Tenniskids TOF
+          </motion.p>
+          <motion.h1
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.05 }}
+            className="max-w-4xl text-4xl font-bold leading-tight text-white md:text-6xl lg:text-7xl"
+          >
+            Kids Tennis op TVO Oostvoorne
           </motion.h1>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-xl md:text-2xl text-gray-700 mb-2"
+            transition={{ duration: 0.55, delay: 0.15 }}
+            className="mt-5 max-w-2xl text-lg leading-relaxed text-white/90 md:text-xl"
           >
-            4 dagen vol sport, creativiteit en vriendschap voor kids van 6 t/m 12 jaar.
-          </motion.p>
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-lg text-emerald-600 font-semibold mb-8"
-          >
-            Maandag 20 t/m donderdag 23 juli 2026
+            Vaste trainingen, optioneel een speelmoment op vrijdag, en een spelerskaart waarmee
+            kinderen echt zien wat ze leren.
           </motion.p>
           <motion.div
-            initial={{ opacity: 0, y: 10 }}
+            initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            className="flex flex-wrap gap-4 justify-center"
+            transition={{ duration: 0.5, delay: 0.25 }}
+            className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center"
           >
-            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.98 }}>
-              <Link
-                href="/inschrijven"
-                className="inline-flex items-center gap-2 bg-lime-500 hover:bg-lime-600 text-white font-bold px-8 py-4 rounded-xl shadow-lg hover:shadow-xl transition-shadow"
-              >
-                Meld je direct aan!
-              </Link>
-            </motion.div>
-            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.98 }}>
-              <Link
-                href="/media"
-                className="inline-flex items-center gap-2 border-2 border-sky-500 text-sky-600 hover:bg-sky-50 font-bold px-8 py-4 rounded-xl transition-colors"
-              >
-                Bekijk de foto&apos;s
-              </Link>
-            </motion.div>
+            <Link
+              href="/inschrijven-tennis-les"
+              className="inline-flex items-center justify-center rounded-xl bg-white px-6 py-3.5 text-base font-bold text-gray-900 shadow-lg transition hover:bg-emerald-50"
+            >
+              Inschrijven
+            </Link>
+            <a
+              href="#proeflessen"
+              className="inline-flex items-center justify-center rounded-xl border border-white/40 bg-white/10 px-6 py-3.5 text-base font-semibold text-white backdrop-blur-sm transition hover:bg-white/20"
+            >
+              Eerst 3× proberen
+            </a>
           </motion.div>
         </div>
-        <motion.a
-          href="#verder"
-          className="absolute bottom-6 left-1/2 -translate-x-1/2 text-sky-500 hover:text-sky-600"
-          animate={{ y: [0, 6, 0] }}
-          transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
-        >
-          <ChevronDown className="h-8 w-8" />
-        </motion.a>
       </section>
 
-      {/* Promo video section */}
-      <section className="py-16 md:py-24 bg-amber-400 scroll-mt-24">
+      {/* Intro / TOF */}
+      <section className="relative overflow-hidden py-16 md:py-20">
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              'linear-gradient(160deg, #ecfdf5 0%, #fff7ed 45%, #f0fdf4 100%)',
+          }}
+        />
+        <div className="container relative z-10 mx-auto max-w-4xl px-4">
+          <motion.div {...fadeInUp} className="text-center">
+            <h2 className="text-3xl font-bold text-gray-900 md:text-4xl">
+              Tenniskids op TVO
+            </h2>
+            <p className="mx-auto mt-5 max-w-3xl text-lg leading-relaxed text-gray-700">
+              We werken met Tenniskids TOF van de KNLTB. Kleine kinderen spelen op een minibaan met
+              een zachte bal, grotere kinderen groeien door naar een grotere baan. Zo blijft het
+              leuk én leerzaam.
+            </p>
+            <p className="mx-auto mt-4 max-w-3xl text-base leading-relaxed text-gray-600">
+              Het oude vrijblijvende systeem stopt. Voor de komende cyclus van{' '}
+              <strong>13 weken</strong> (sept t/m dec, met herfstvakantie ertussen) kies je bij
+              inschrijving uit twee pakketten.
+            </p>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Sfeerimpressie */}
+      <section className="bg-white py-8 md:py-12" aria-label="Sfeerimpressie Tenniskids">
         <div className="container mx-auto px-4">
-          <motion.h2
-            className="text-3xl md:text-4xl font-bold text-amber-950 text-center mb-10"
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-40px' }}
-            transition={{ duration: 0.5 }}
-          >
-            Bekijk de sfeer van het kamp
-          </motion.h2>
-          <motion.div
-            className="max-w-4xl mx-auto"
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-60px' }}
-            transition={{ duration: 0.5 }}
-          >
-            <div className="rounded-2xl overflow-hidden shadow-2xl ring-4 ring-amber-950/20">
-              <video
-                className="w-full aspect-video object-cover"
-                src="https://soaacpusdhyxwucjhhpy.supabase.co/storage/v1/object/public/tennis%20connect%20kamp/promo.mp4"
-                controls
-                playsInline
-                preload="metadata"
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-3 sm:gap-4">
+            {GALLERY_IMAGES.map((image, index) => (
+              <motion.div
+                key={image.src}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-40px' }}
+                transition={{ duration: 0.5, delay: index * 0.08 }}
+                className="relative aspect-[4/3] overflow-hidden"
               >
-                <track kind="captions" />
-              </video>
+                <Image
+                  src={image.src}
+                  alt={image.alt}
+                  fill
+                  sizes="(max-width: 640px) 100vw, 33vw"
+                  className="object-cover"
+                />
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Categories */}
+      <section id="categorieen" className="scroll-mt-24 bg-white py-16 md:py-20">
+        <div className="container mx-auto max-w-3xl px-4">
+          <motion.div {...fadeInUp} className="mb-8">
+            <h2 className="text-3xl font-bold text-gray-900 md:text-4xl">
+              Rood, Oranje &amp; Groen
+            </h2>
+            <p className="mt-4 max-w-2xl text-lg leading-relaxed text-gray-600">
+              Welke kleur past, hangt af van leeftijd en niveau. De trainer deelt definitief in.
+            </p>
+          </motion.div>
+          <motion.div {...fadeInUp}>
+            <CategoryAccordion />
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Packages */}
+      <section
+        id="pakketten"
+        className="scroll-mt-24 relative overflow-hidden py-16 md:py-20"
+      >
+        <div
+          className="absolute inset-0"
+          style={{
+            background: 'linear-gradient(180deg, #f8fafc 0%, #ecfdf5 50%, #f8fafc 100%)',
+          }}
+        />
+        <div className="container relative z-10 mx-auto max-w-4xl px-4">
+          <motion.div {...fadeInUp} className="mb-10">
+            <h2 className="text-3xl font-bold text-gray-900 md:text-4xl">
+              Pakketten
+            </h2>
+            <p className="mt-4 text-lg text-gray-600">
+              13 lesweken · sept t/m dec · 1 week herfstvakantie ertussen
+            </p>
+          </motion.div>
+
+          <motion.div
+            {...fadeInUp}
+            className="mb-8 rounded-2xl border border-gray-200 bg-white p-5 shadow-sm md:p-6"
+          >
+            <h3 className="text-base font-bold text-gray-900">Start &amp; einde per lesdag</h3>
+            <p className="mt-2 text-sm text-gray-600">
+              Di t/m vr starten in de week van 9–12 september. Maandag start een week later (15
+              september).
+            </p>
+            <ul className="mt-4 grid gap-2 text-sm text-gray-700 sm:grid-cols-2">
+              <li>
+                <span className="font-semibold text-gray-900">Dinsdag:</span> 9 sep → 15 dec
+              </li>
+              <li>
+                <span className="font-semibold text-gray-900">Woensdag:</span> 10 sep → 16 dec
+              </li>
+              <li>
+                <span className="font-semibold text-gray-900">Donderdag:</span> 11 sep → 17 dec
+              </li>
+              <li>
+                <span className="font-semibold text-gray-900">Vrijdag:</span> 12 sep → 18 dec
+              </li>
+              <li className="sm:col-span-2">
+                <span className="font-semibold text-gray-900">Maandag:</span> 15 sep → 21 dec
+              </li>
+            </ul>
+          </motion.div>
+
+          <div className="grid gap-5 sm:grid-cols-2">
+            <motion.article
+              {...fadeInUp}
+              className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm md:p-7"
+            >
+              <p className="text-sm font-semibold uppercase tracking-wide text-gray-500">
+                Basispakket
+              </p>
+              <p className="mt-2 text-3xl font-bold tabular-nums text-gray-900">€ 170,-</p>
+              <p className="mt-2 text-gray-600">1× per week training</p>
+              <ul className="mt-5 space-y-2 border-t border-gray-100 pt-5 text-gray-700">
+                <li>· 13 weken in Rood, Oranje of Groen</li>
+                <li>· Techniek, spelinzicht en meters maken</li>
+              </ul>
+            </motion.article>
+
+            <motion.article
+              {...fadeInUp}
+              className="relative rounded-2xl border-2 border-emerald-400 bg-white p-6 shadow-sm md:p-7"
+            >
+              <span className="absolute -top-2.5 right-4 rounded-full bg-emerald-600 px-2.5 py-0.5 text-[11px] font-bold uppercase tracking-wide text-white">
+                + € 70
+              </span>
+              <p className="text-sm font-semibold uppercase tracking-wide text-emerald-800">
+                Totaalpakket
+              </p>
+              <p className="mt-2 text-3xl font-bold tabular-nums text-gray-900">€ 240,-</p>
+              <p className="mt-2 text-gray-600">
+                Training + elke vrijdag het Speelmoment
+              </p>
+              <ul className="mt-5 space-y-2 border-t border-emerald-100 pt-5 text-gray-700">
+                <li>· 13 weken training én elke vrijdag meespelen</li>
+                <li>
+                  · Voor <strong>€ 70,-</strong> extra (een tweede trainingsuur apart zou € 170,-
+                  kosten)
+                </li>
+              </ul>
+            </motion.article>
+          </div>
+
+          <motion.p {...fadeInUp} className="mt-8 text-sm text-gray-500">
+            Instromen halverwege? Dan rekenen we naar rato van de resterende weken.
+          </motion.p>
+        </div>
+      </section>
+
+      {/* Friday Speelmoment */}
+      <section id="vrijdag" className="scroll-mt-24 bg-white py-16 md:py-20">
+        <div className="container mx-auto max-w-5xl px-4">
+          <motion.div {...fadeInUp} className="mb-10 max-w-3xl">
+            <h2 className="text-3xl font-bold text-gray-900 md:text-4xl">
+              Vrijdag Speelmoment
+            </h2>
+            <p className="mt-4 text-lg leading-relaxed text-gray-700">
+              Tennis leer je door te spelen, niet alleen door te trainen. Op vrijdag maken we meters
+              in wedstrijdvormen en spelletjes. Start{' '}
+              <strong>12 september</strong>, laatste keer <strong>18 december</strong>. Omdat
+              iedereen vooraf is aangemeld, is er een vaste groep — en dat merk je meteen.
+            </p>
+          </motion.div>
+
+          <motion.div {...fadeInUp} className="mb-10 grid gap-6 sm:grid-cols-3">
+            {CATEGORIES.map((cat) => (
+              <div key={cat.id} className="border-l-4 pl-4" style={{ borderColor: cat.accent }}>
+                <p className="font-bold" style={{ color: cat.accent }}>
+                  {cat.short}
+                </p>
+                <p className="mt-1 text-lg font-semibold tabular-nums text-gray-900">{cat.time}</p>
+                <p className="text-sm text-gray-500">50 minuten</p>
+              </div>
+            ))}
+          </motion.div>
+
+          <motion.p {...fadeInUp} className="mb-8 text-sm text-gray-500">
+            Minder dan 5 aanmeldingen per kleur? Dan voegen we groepen samen (bijv. Rood-Oranje of
+            Oranje-Groen).
+          </motion.p>
+
+          <motion.div {...fadeInUp}>
+            <h3 className="mb-4 text-xl font-bold text-gray-900">
+              Programma per week
+            </h3>
+            <div className="overflow-x-auto rounded-2xl border border-gray-200 shadow-sm">
+              <table className="w-full min-w-[640px] text-left text-sm">
+                <thead>
+                  <tr className="border-b border-gray-200 bg-slate-50">
+                    <th className="px-4 py-3 font-semibold text-gray-900">Wk</th>
+                    <th className="px-4 py-3 font-semibold text-gray-900">Thema</th>
+                    <th className="px-4 py-3 font-semibold text-red-700">Rood · speels</th>
+                    <th className="px-4 py-3 font-semibold text-orange-700">
+                      Oranje &amp; Groen · wedstrijdgericht
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-100">
+                  {FRIDAY_PROGRAM.map((row) => (
+                    <tr key={row.week} className="align-top hover:bg-slate-50/80">
+                      <td className="px-4 py-3 font-bold tabular-nums text-gray-900">{row.week}</td>
+                      <td className="px-4 py-3 font-medium text-gray-900">{row.theme}</td>
+                      <td className="px-4 py-3 text-gray-600">{row.rood}</td>
+                      <td className="px-4 py-3 text-gray-600">{row.oranjeGroen}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
           </motion.div>
         </div>
       </section>
 
-      {/* Section 1: Slaan, scoren en groeien */}
-      <section id="verder" className="py-16 md:py-24 bg-amber-50 scroll-mt-24">
-        <div className="container mx-auto px-4">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <motion.div
-              className="relative aspect-[4/3] rounded-2xl overflow-hidden bg-amber-100 shadow-lg"
-              {...fadeInLeft}
-            >
-              <motion.div
-                className="absolute inset-0"
-                whileHover={{ scale: 1.04 }}
-                transition={{ duration: 0.3 }}
-              >
-                {SLIDESHOW_IMAGES.map((slide, i) => (
-                  /* eslint-disable-next-line @next/next/no-img-element */
-                  <img
-                    key={slide.src}
-                    src={slide.src}
-                    alt={slide.alt}
-                    className="absolute inset-0 w-full h-full object-cover transition-opacity duration-700"
-                    style={{ opacity: slideIndex === i ? 1 : 0, zIndex: slideIndex === i ? 1 : 0 }}
-                  />
-                ))}
-              </motion.div>
-            </motion.div>
-            <motion.div {...fadeInRight}>
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4 text-lime-700">
-                Slaan, scoren en groeien!
-              </h2>
-              <p className="text-lg text-gray-600 leading-relaxed mb-6">
-                Elke ochtend duiken we 2 uur lang de baan op voor een intensieve training. Of je nu
-                voor het eerst een racket vasthoudt of al een echte wedstrijdexpert bent: onze
-                trainers zorgen dat jij het beste uit jezelf haalt op jouw eigen niveau.
-              </p>
-              <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.98 }}>
-                <Link
-                  href="/inschrijven"
-                  className="inline-flex items-center gap-2 bg-lime-500 hover:bg-lime-600 text-white font-bold px-6 py-3 rounded-xl shadow-md hover:shadow-lg transition-shadow"
-                >
-                  Meld je aan
-                </Link>
-              </motion.div>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* Section 2: Brandstof voor kampioenen */}
-      <section className="py-16 md:py-24 bg-yellow-50">
-        <div className="container mx-auto px-4">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <motion.div className="order-2 md:order-1" {...fadeInRight}>
-              <h2 className="text-3xl md:text-4xl font-bold text-amber-800 mb-4">
-                Brandstof voor kampioenen.
-              </h2>
-              <p className="text-lg text-gray-600 leading-relaxed mb-4">
-                Van sporten krijg je trek! Daarom staat er elke middag een verrassend en gezond menu
-                klaar. Elke dag vers van de bakker: broodjes van Bakkerij Voskamp. Tussendoor
-                zorgen we voor onbeperkt fruit en drinken, zodat de energie de hele dag op 100%
-                blijft.
-              </p>
-              <p className="text-amber-600 font-semibold">Elke dag vers van de bakker!</p>
-            </motion.div>
-            <motion.div
-              className="relative aspect-[4/3] rounded-2xl overflow-hidden bg-amber-100 shadow-lg order-1 md:order-2"
-              {...fadeInLeft}
-            >
-              <motion.div
-                className="absolute inset-0"
-                whileHover={{ scale: 1.04 }}
-                transition={{ duration: 0.3 }}
-              >
-                {BRANDSTOF_SLIDESHOW_IMAGES.map((slide, i) => (
-                  /* eslint-disable-next-line @next/next/no-img-element */
-                  <img
-                    key={slide.src}
-                    src={slide.src}
-                    alt={slide.alt}
-                    className="absolute inset-0 w-full h-full object-cover transition-opacity duration-700"
-                    style={{
-                      opacity: brandstofSlideIndex === i ? 1 : 0,
-                      zIndex: brandstofSlideIndex === i ? 1 : 0,
-                    }}
-                  />
-                ))}
-              </motion.div>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* Section 3: Meer dan alleen sport */}
-      <section className="py-16 md:py-24 bg-sky-50">
-        <div className="container mx-auto px-4">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <motion.div
-              className="relative aspect-[4/3] rounded-2xl overflow-hidden bg-sky-100 shadow-lg"
-              {...fadeInLeft}
-            >
-              <motion.div
-                className="absolute inset-0"
-                whileHover={{ scale: 1.04 }}
-                transition={{ duration: 0.3 }}
-              >
-                {ACTION_SLIDESHOW_IMAGES.map((slide, i) => {
-                  const isCurrent = actionSlideIndex === i;
-                  const isNext =
-                    i === (actionSlideIndex + 1) % ACTION_SLIDESHOW_IMAGES.length;
-                  const isVisible = isCurrent || isNext;
-                  return (
-                    /* eslint-disable-next-line @next/next/no-img-element */
-                    <img
-                      key={slide.src}
-                      src={slide.src}
-                      alt={slide.alt}
-                      className="absolute inset-0 w-full h-full object-cover transition-opacity duration-700"
-                      style={{
-                        opacity: isVisible ? 1 : 0,
-                        zIndex: isCurrent ? 1 : 0,
-                      }}
-                    />
-                  );
-                })}
-              </motion.div>
-            </motion.div>
-            <motion.div {...fadeInRight}>
-              <h2 className="text-3xl md:text-4xl font-bold text-sky-800 mb-4">
-                Meer dan alleen sport.
-              </h2>
-              <p className="text-lg text-gray-600 leading-relaxed">
-                Na de training is het tijd voor actie naast de baan. Onze middagen zitten vol
-                creatieve challenges en teambuilding. Avonturen in het bos, de duinen en op het
-                water. Samenwerken, lachen en nieuwe vrienden maken staan hierbij centraal.
-              </p>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* Section 4: Een finale om nooit te vergeten */}
-      <section className="py-16 md:py-24 bg-violet-50">
-        <div className="container mx-auto px-4">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <motion.div className="order-2 md:order-1" {...fadeInRight}>
-              <h2 className="text-3xl md:text-4xl font-bold text-violet-800 mb-4">
-                Een finale om nooit te vergeten.
-              </h2>
-              <p className="text-lg text-gray-600 leading-relaxed mb-4">
-                We sluiten de week op donderdag op een heel bijzondere manier af, samen met alle
-                ouders. Een feestelijk hoogtepunt waar de kids laten zien wat ze die week hebben
-                beleefd. Een herinnering die nog lang blijft plakken!
-              </p>
-              <p className="text-violet-600 font-semibold">
-                Een knallend slotstuk! Op donderdag doen we er een schepje bovenop. We nodigen alle
-                ouders uit om aan te sluiten. We sluiten de week gezamenlijk af en eindigen om 19:00
-                uur. Een herinnering voor het hele gezin!
-              </p>
-            </motion.div>
-            <motion.div
-              className="relative aspect-[4/3] rounded-2xl overflow-hidden bg-violet-100 shadow-lg order-1 md:order-2"
-              {...fadeInLeft}
-            >
-              <motion.div
-                className="absolute inset-0"
-                whileHover={{ scale: 1.04 }}
-                transition={{ duration: 0.3 }}
-              >
-                {FINALE_SLIDESHOW_IMAGES.map((slide, i) => (
-                  /* eslint-disable-next-line @next/next/no-img-element */
-                  <img
-                    key={slide.src}
-                    src={slide.src}
-                    alt={slide.alt}
-                    className="absolute inset-0 w-full h-full object-cover transition-opacity duration-700"
-                    style={{
-                      opacity: finaleSlideIndex === i ? 1 : 0,
-                      zIndex: finaleSlideIndex === i ? 1 : 0,
-                    }}
-                  />
-                ))}
-              </motion.div>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* Over Ons */}
-      <section className="py-16 md:py-24 bg-rose-50">
-        <div className="container mx-auto px-4 max-w-4xl">
-          <motion.h2
-            className="text-3xl md:text-4xl font-bold text-rose-800 mb-6 text-center"
-            {...fadeInUp}
-          >
-            Al 6 jaar een begrip in de regio!
-          </motion.h2>
-          <motion.p
-            className="text-lg text-gray-600 leading-relaxed text-center"
-            {...fadeInUp}
-            transition={{ delay: 0.1 }}
-          >
-            Bij ons draait het om meer dan alleen een balletje slaan. Al 6 jaar organiseren wij met
-            trots hét zomerkamp waar sportiviteit, creativiteit en teamspirit samenkomen.
-          </motion.p>
-          <motion.p
-            className="text-lg text-gray-600 leading-relaxed mt-4 text-center"
-            {...fadeInUp}
-            transition={{ delay: 0.15 }}
-          >
-            Wij geloven dat elk kind moet kunnen schitteren op zijn of haar eigen niveau. Of je nu
-            droomt van een profcarrière of voor het eerst een padelracket vasthoudt: onze
-            professionele trainers staan klaar om je techniek te verbeteren met een glimlach.
-          </motion.p>
-          <motion.p
-            className="text-lg text-gray-600 leading-relaxed mt-4 text-center"
-            {...fadeInUp}
-            transition={{ delay: 0.2 }}
-          >
-            Maar een kamp is pas écht af als de sfeer goed is. Daarom besteden we net zoveel
-            aandacht aan onze creatieve middagactiviteiten en onze inmiddels beroemde lunches. Bij
-            ons ben je geen nummer, maar onderdeel van een hecht team. Kom je deze zomer met ons
-            meevieren?
-          </motion.p>
-          <motion.div
-            className="mt-8 flex justify-center"
-            {...fadeInUp}
-            transition={{ delay: 0.3 }}
-          >
-            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.98 }}>
-              <Link
-                href="/inschrijven"
-                className="inline-flex items-center gap-2 bg-lime-500 hover:bg-lime-600 text-white font-bold px-8 py-4 rounded-xl shadow-lg hover:shadow-xl transition-shadow"
-              >
-                Meld je aan voor het kamp
-              </Link>
-            </motion.div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Waarom kiezen + groepsfoto */}
-      <section className="py-16 md:py-24 bg-emerald-50">
-        <div className="container mx-auto px-4">
-          <div className="grid lg:grid-cols-2 gap-12 items-start">
-            <motion.div {...fadeInLeft}>
-              <h2 className="text-3xl md:text-4xl font-bold text-emerald-800 mb-8">
-                Waarom kiezen voor ons?
-              </h2>
-              <ul className="space-y-4">
-                {[
-                  ['Professionele begeleiding: 2 uur intensieve training per dag op eigen niveau.', 'text-lime-600'],
-                  ['All-inclusive genieten: Elke dag een vers gevarieerd menu, onbeperkt fruit en drinken.', 'text-amber-600'],
-                  ['Focus op Teamspirit: Unieke middagactiviteiten die verder gaan dan alleen sport.', 'text-sky-600'],
-                  ['Flexibiliteit: Doe alle 4 de dagen mee of schrijf je in per dag.', 'text-violet-600'],
-                  ['Feestelijke afsluiting: Een spectaculair einde van de week samen met alle ouders.', 'text-rose-600'],
-                ].map(([text, iconColor], i) => (
-                  <motion.li
-                    key={i}
-                    className="flex gap-3"
-                    initial={{ opacity: 0, x: -16 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true, margin: '-20px' }}
-                    transition={{ duration: 0.4, delay: i * 0.08 }}
-                  >
-                    <CheckCircle2 className={`h-6 w-6 flex-shrink-0 mt-0.5 ${iconColor}`} />
-                    <span className="text-gray-700">{text}</span>
-                  </motion.li>
-                ))}
-              </ul>
-            </motion.div>
-            <motion.div
-              className="relative aspect-[4/3] rounded-2xl overflow-hidden bg-emerald-100 shadow-lg"
-              {...fadeInRight}
-            >
-              <motion.div
-                className="absolute inset-0"
-                whileHover={{ scale: 1.04 }}
-                transition={{ duration: 0.3 }}
-              >
-                {WAAROM_SLIDESHOW_IMAGES.map((slide, i) => (
-                  /* eslint-disable-next-line @next/next/no-img-element */
-                  <img
-                    key={slide.src}
-                    src={slide.src}
-                    alt={slide.alt}
-                    className="absolute inset-0 w-full h-full object-cover transition-opacity duration-700"
-                    style={{
-                      opacity: waaromSlideIndex === i ? 1 : 0,
-                      zIndex: waaromSlideIndex === i ? 1 : 0,
-                    }}
-                  />
-                ))}
-              </motion.div>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* Locatie & Omgeving */}
-      <section className="py-16 md:py-24 bg-cyan-50">
-        <div className="container mx-auto px-4">
-          <motion.div
-            className="max-w-3xl mx-auto text-center"
-            {...fadeInUp}
-          >
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4 }}
-            >
-              <MapPin className="h-12 w-12 text-cyan-500 mx-auto mb-4" />
-            </motion.div>
-            <h2 className="text-3xl md:text-4xl font-bold text-cyan-800 mb-4">
-              Meer dan alleen de baan...
-            </h2>
-            <p className="text-lg text-gray-600 leading-relaxed">
-              Ons kamp vindt plaats bij <strong>Tvo in het prachtige Oostvoorne</strong>. De
-              ochtenden staan in het teken van tennis en padel, maar &apos;s middags trekken we
-              eropuit! Dankzij onze unieke locatie organiseren we de leukste avonturen in het bos,
-              de duinen en zelfs op het water. Een echte vakantie-ervaring!
-            </p>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Tofscore */}
-      <section className="py-16 md:py-24 bg-amber-50">
-        <div className="container mx-auto px-4 max-w-3xl text-center">
-          <motion.div
-            {...fadeInUp}
-          >
-            <motion.div
-              initial={{ opacity: 0, rotate: -10 }}
-              whileInView={{ opacity: 1, rotate: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-            >
-              <Star className="h-12 w-12 text-amber-500 mx-auto mb-4" />
-            </motion.div>
-            <h2 className="text-3xl md:text-4xl font-bold text-amber-800 mb-4">
-              De Tofscore: Spelen is winnen!
-            </h2>
-            <p className="text-lg text-gray-600 leading-relaxed">
-              Ons speciale puntensysteem waarbij plezier en inzet worden beloond. Hoe meer je speelt
-              en meedoet, hoe hoger je score!
-            </p>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Praktische info & Prijzen */}
-      <section className="py-16 md:py-24 bg-indigo-50">
-        <div className="container mx-auto px-4">
-          <motion.h2
-            className="text-3xl md:text-4xl font-bold text-indigo-800 mb-10 text-center"
-            {...fadeInUp}
-          >
-            Goed om te weten
-          </motion.h2>
-          <div className="grid md:grid-cols-2 gap-12 max-w-5xl mx-auto">
-            <motion.div
-              initial={{ opacity: 0, x: -24 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: '-40px' }}
-              transition={{ duration: 0.5 }}
-            >
-              <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
-                <Calendar className="h-5 w-5 text-sky-500" />
-                Wanneer?
-              </h3>
-              <ul className="space-y-2 text-gray-700">
-                <li>
-                  <strong>Data:</strong> Maandag 20 juli t/m donderdag 23 juli 2026
-                </li>
-                <li>
-                  <strong>Dagelijkse tijden:</strong> 09:00 – 16:00 uur
-                </li>
-                <li>
-                  <strong>Donderdag:</strong> tot 19:00 uur, inclusief afsluiting met ouders
-                </li>
-              </ul>
-              <h3 className="text-xl font-bold text-gray-900 mt-6 mb-4 flex items-center gap-2">
-                <Clock className="h-5 w-5 text-violet-500" />
-                Inschrijfmogelijkheden
-              </h3>
-              <ul className="space-y-2 text-gray-700">
-                <li>Volledig kamp: alle 4 de dagen</li>
-                <li>Flexibel: per losse dag inschrijven kan ook</li>
-              </ul>
-            </motion.div>
-            <motion.div
-              initial={{ opacity: 0, x: 24 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: '-40px' }}
-              transition={{ duration: 0.5 }}
-            >
-              <h3 className="text-xl font-bold text-indigo-800 mb-4">Prijzen 2026</h3>
-              <ul className="space-y-3 text-gray-700">
-                <li className="flex justify-between items-center py-2 border-b border-indigo-200">
-                  <span>Losse dag</span>
-                  <span className="font-bold text-lime-600">€ 60,-</span>
-                </li>
-                <li className="flex justify-between items-center py-2 border-b border-indigo-200">
-                  <span>Donderdag (incl. afsluiting)</span>
-                  <span className="font-bold text-amber-600">€ 75,-</span>
-                </li>
-                <li className="flex justify-between items-center py-2">
-                  <span>Volledig kamp (4 dagen)</span>
-                  <span className="font-bold text-emerald-600">€ 225,-</span>
-                </li>
-              </ul>
-              <p className="text-sm text-gray-500 mt-4">Leeftijd: 6 t/m 12 jaar</p>
-              <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-                <Link
-                  href="/inschrijven"
-                  className="mt-6 inline-flex items-center gap-2 bg-lime-500 hover:bg-lime-600 text-white font-bold px-6 py-3 rounded-xl shadow-md hover:shadow-lg transition-shadow w-full justify-center"
-                >
-                  Direct inschrijven
-                </Link>
-              </motion.div>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* Sticky CTA button - only on homepage */}
-      <motion.div
-        className="fixed bottom-6 right-6 z-40"
-        initial={{ opacity: 0, scale: 0.8 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ delay: 0.8, duration: 0.4 }}
+      {/* Spelerskaart & TOF */}
+      <section
+        id="tofscore"
+        className="scroll-mt-24 relative overflow-hidden py-16 md:py-20"
       >
-        <motion.div
-          whileHover={{ scale: 1.08 }}
-          whileTap={{ scale: 0.95 }}
-        >
-          <Link
-            href="/inschrijven"
-            className="flex items-center justify-center gap-2 bg-lime-500 hover:bg-lime-600 text-white font-bold px-6 py-4 rounded-full shadow-lg text-sm md:text-base"
-            style={{ boxShadow: '0 4px 20px rgba(34, 197, 94, 0.4)' }}
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              'linear-gradient(135deg, #fff7ed 0%, #fefce8 40%, #ecfdf5 100%)',
+          }}
+        />
+        <div className="container relative z-10 mx-auto max-w-5xl px-4">
+          <motion.div {...fadeInUp} className="mb-10 text-center">
+            <h2 className="text-3xl font-bold text-gray-900 md:text-4xl">
+              Spelerskaart &amp; Tofscore
+            </h2>
+            <p className="mx-auto mt-4 max-w-2xl text-gray-700">
+              Elk kind krijgt een spelerskaart aan de tennistas. Bolletjes inkleuren, levels halen,
+              buttons verdienen.
+            </p>
+          </motion.div>
+
+          <motion.div
+            {...fadeInUp}
+            className="mb-12 grid grid-cols-1 gap-3 sm:grid-cols-3 sm:gap-4"
           >
-            Meld je aan!
-          </Link>
-        </motion.div>
-      </motion.div>
+            {TOFSCORE_IMAGES.map((image) => (
+              <div
+                key={image.src}
+                className="relative aspect-[4/3] overflow-hidden"
+              >
+                <Image
+                  src={image.src}
+                  alt={image.alt}
+                  fill
+                  sizes="(max-width: 640px) 100vw, 33vw"
+                  className="object-cover"
+                />
+              </div>
+            ))}
+          </motion.div>
+
+          <div className="mb-12 grid gap-6 md:grid-cols-2">
+            <motion.div
+              {...fadeInUp}
+              className="rounded-2xl border border-orange-200 bg-white/90 p-6 shadow-sm"
+            >
+              <div className="mb-3 flex h-11 w-11 items-center justify-center rounded-xl bg-orange-100 text-orange-700">
+                <Trophy className="h-5 w-5" />
+              </div>
+              <h3 className="text-xl font-bold text-gray-900">Fases &amp; levels</h3>
+              <p className="mt-3 text-gray-700 leading-relaxed">
+                Per kleur zijn er <strong>10 fases</strong>. Elke fase heeft{' '}
+                <strong>3 levels</strong>:
+              </p>
+              <ul className="mt-4 space-y-2 text-sm text-gray-700">
+                <li>
+                  <strong>Level 1 – Ontdekken:</strong> kennismaken met de oefening
+                </li>
+                <li>
+                  <strong>Level 2 – Beheersen:</strong> het zit erin
+                </li>
+                <li>
+                  <strong>Level 3 – Excelleren:</strong> een extra uitdaging erbij
+                </li>
+              </ul>
+            </motion.div>
+
+            <motion.div
+              {...fadeInUp}
+              className="rounded-2xl border border-emerald-200 bg-white/90 p-6 shadow-sm"
+            >
+              <div className="mb-3 flex h-11 w-11 items-center justify-center rounded-xl bg-emerald-100 text-emerald-700">
+                <Sparkles className="h-5 w-5" />
+              </div>
+              <h3 className="text-xl font-bold text-gray-900">Stippen sparen</h3>
+              <p className="mt-3 text-gray-700 leading-relaxed">
+                Samen met de trainer kleur je bolletjes in als iets lukt. Ook na lessen of op
+                vrijdag spaar je stippen — bijvoorbeeld voor buttons op de tas.
+              </p>
+              <p className="mt-4 text-sm text-gray-600">
+                Levels gaan over techniek, tactiek, bewegen en sportief gedrag.
+              </p>
+            </motion.div>
+          </div>
+
+          <motion.div
+            {...fadeInUp}
+            className="rounded-2xl border border-gray-200 bg-white/80 px-5 py-5 md:px-8"
+          >
+            <div className="flex gap-3">
+              <Ruler className="mt-0.5 h-5 w-5 shrink-0 text-emerald-700" />
+              <p className="text-gray-700 leading-relaxed">
+                <strong>Door naar een nieuwe kleur?</strong> Dat gebeurt pas als de fases van de
+                huidige kleur goed zitten — bijvoorbeeld van Rood naar Oranje. Twijfel je over het
+                niveau? Vraag het even aan de trainer na de les.
+              </p>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Proeflessen */}
+      <section id="proeflessen" className="scroll-mt-24 bg-white py-16 md:py-20">
+        <div className="container mx-auto max-w-4xl px-4">
+          <motion.div {...fadeInUp} className="mb-10 text-center">
+            <h2 className="text-3xl font-bold text-gray-900 md:text-4xl">
+              Proeflessen
+            </h2>
+            <p className="mx-auto mt-4 max-w-2xl text-gray-600">
+              Nog niet zeker of tennis iets is? Eerst vrijblijvend meedoen.
+            </p>
+          </motion.div>
+
+          <div className="mb-8 grid gap-4 md:grid-cols-3">
+            {[
+              {
+                step: '1 & 2',
+                title: 'Twee gewone lessen',
+                text: 'Op de trainingsdag, in de juiste categorie.',
+              },
+              {
+                step: '3',
+                title: 'Eén vrijdag',
+                text: 'Meedoen met het Speelmoment — inclusief Tofscore.',
+              },
+              {
+                step: 'Daarna',
+                title: 'Lid worden',
+                text: 'Basis- of Totaalpakket kiezen en lid worden van TVO.',
+              },
+            ].map((item) => (
+              <motion.div
+                key={item.step}
+                {...fadeInUp}
+                className="rounded-2xl border border-gray-200 bg-slate-50 px-5 py-6"
+              >
+                <p className="text-xs font-bold uppercase tracking-widest text-emerald-700">
+                  Stap {item.step}
+                </p>
+                <h3 className="mt-2 text-lg font-bold text-gray-900">{item.title}</h3>
+                <p className="mt-2 text-sm text-gray-600">{item.text}</p>
+              </motion.div>
+            ))}
+          </div>
+
+          <motion.div
+            {...fadeInUp}
+            className="flex flex-col gap-4 rounded-2xl border border-emerald-200 bg-emerald-50/60 p-6 md:flex-row md:items-center md:justify-between md:p-8"
+          >
+            <div>
+              <div className="mb-2 flex items-center gap-2 text-emerald-800">
+                <Users className="h-5 w-5" />
+                <span className="font-bold">Racket te leen</span>
+              </div>
+              <p className="text-gray-700">
+                Voor de proeflessen hebben wij een racket. Vragen of aanmelden? Mail{' '}
+                <a
+                  href="mailto:info@tennisconnect.nl"
+                  className="font-semibold text-emerald-800 underline underline-offset-2"
+                >
+                  info@tennisconnect.nl
+                </a>{' '}
+                of app Remco.
+              </p>
+            </div>
+            <a
+              href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHATSAPP_MESSAGE)}`}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex shrink-0 items-center justify-center gap-2 rounded-xl bg-[#25D366] px-5 py-3 font-semibold text-white shadow-sm transition hover:bg-[#20bd5a]"
+            >
+              <MessageCircle className="h-5 w-5" />
+              WhatsApp Remco
+            </a>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Final CTA */}
+      <section className="relative overflow-hidden border-t border-gray-200 bg-white py-16 md:py-20">
+        <div className="container relative z-10 mx-auto max-w-2xl px-4 text-center">
+          <motion.h2
+            {...fadeInUp}
+            className="text-3xl font-bold text-gray-900 md:text-4xl"
+          >
+            Meedoen?
+          </motion.h2>
+          <motion.p {...fadeInUp} className="mt-4 text-lg leading-relaxed text-gray-600">
+            Geef bij aanmelden door of je voor Basis (€ 170,-) of Totaal (€ 240,-) gaat.
+          </motion.p>
+          <motion.div {...fadeInUp} className="mt-8">
+            <Link
+              href="/inschrijven-tennis-les"
+              className="text-base font-semibold text-emerald-800 underline underline-offset-4 transition hover:text-emerald-950"
+            >
+              Naar inschrijven
+            </Link>
+          </motion.div>
+        </div>
+      </section>
     </main>
   );
 }

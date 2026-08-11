@@ -1,9 +1,9 @@
 import TennisLesInschrijvenPage from '@/views/TennisLesInschrijvenPage';
 
 export const metadata = {
-  title: 'Inschrijven tennisles | Voorjaar 2026 | Tennis Connect',
+  title: 'Inschrijven Kids Tennis | TVO Oostvoorne | Tennis Connect',
   description:
-    'Lesperiode 2 februari t/m 10 juli 2026. Groepen, tarieven (geel €200, rood/oranje/groen €220, 18 weken; senior €60/uur gedeeld) en rooster ma–wo + vrijdag.',
+    'Schrijf je in voor Kids Tennis bij TVO Oostvoorne. Basispakket €170 of Totaalpakket €240 (13 weken). Proeflessen mogelijk. Rood, Oranje & Groen.',
 };
 
 export default function Page() {

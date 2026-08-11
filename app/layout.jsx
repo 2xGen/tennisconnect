@@ -14,16 +14,18 @@ const poppins = Poppins({
 });
 
 export const metadata = {
-  title: 'Tennis & Padel Kamp Oostvoorne 2026 | Tennis Connect',
-  description: 'Het leukste Tennis & Padel zomerkamp van Oostvoorne. 4 dagen sport, creativiteit en vriendschap voor kids 6-12 jaar. 20-23 juli 2026. Meld je aan!',
+  title: 'Kids Tennis TVO Oostvoorne | Tennis Connect',
+  description:
+    'Vernieuwd jeugdprogramma bij TVO Oostvoorne: Tenniskids Rood, Oranje & Groen. Basispakket €170 of Totaalpakket €240 (13 weken) met Vrijdag Speelmoment en Tofscore.',
   icons: {
     icon: 'https://toftennis.nl/wp-content/uploads/2024/04/TOF-logo.svg',
     shortcut: 'https://toftennis.nl/wp-content/uploads/2024/04/TOF-logo.svg',
     apple: 'https://toftennis.nl/wp-content/uploads/2024/04/TOF-logo.svg',
   },
   openGraph: {
-    title: 'Het leukste Tennis, Padel & Fun kamp van Voorne aan Zee!',
-    description: 'Het leukste Tennis & Padel zomerkamp van Oostvoorne. 4 dagen sport, creativiteit en vriendschap voor kids 6-12 jaar. 20-23 juli 2026.',
+    title: 'Kids Tennis op TVO Oostvoorne',
+    description:
+      'Tenniskids TOF bij TVO Oostvoorne. Vaste pakketten, Vrijdag Speelmoment en Tofscore-spaarprogramma voor kids.',
     type: 'website',
     locale: 'nl_NL',
     images: [
@@ -31,7 +33,7 @@ export const metadata = {
         url: 'https://soaacpusdhyxwucjhhpy.supabase.co/storage/v1/object/public/tennis%20connect%20kamp/tennis%20foto.jpeg',
         width: 1200,
         height: 630,
-        alt: 'Tennis Connect kamp',
+        alt: 'Kids Tennis TVO Oostvoorne',
       },
     ],
   },

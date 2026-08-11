@@ -5,74 +5,54 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Menu, X } from 'lucide-react';
 
+const NAV_LINKS = [
+  { href: '/', label: 'Home' },
+  { href: '/#categorieen', label: 'Categorieën' },
+  { href: '/#pakketten', label: 'Pakketten' },
+  { href: '/#proeflessen', label: 'Proeflessen' },
+  { href: '/inschrijven-tennis-les', label: 'Inschrijven' },
+];
+
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
+  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm">
+    <header className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm border-b border-gray-100/80">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-20">
-          {/* Logo - Visible on all screen sizes, left side */}
           <div className="flex items-center">
             <Link href="/" className="flex items-center hover:opacity-90 transition-opacity">
-              <Image 
-                src="https://soaacpusdhyxwucjhhpy.supabase.co/storage/v1/object/public/tennis%20connect%20kamp/tennos%20connect%20logo.png" 
-                alt="Tennis Connect" 
+              <Image
+                src="https://soaacpusdhyxwucjhhpy.supabase.co/storage/v1/object/public/tennis%20connect%20kamp/tennos%20connect%20logo.png"
+                alt="Tennis Connect"
                 width={200}
                 height={31}
-                className="h-12 md:h-14 w-auto object-contain" 
+                className="h-12 md:h-14 w-auto object-contain"
                 priority
                 quality={90}
               />
             </Link>
           </div>
 
-          {/* Navigation Menu - Center, hidden on mobile */}
           <nav className="flex-1 flex justify-center">
-            <div className="hidden md:flex items-center gap-6">
-              <Link 
-                href="/" 
-                className="text-sm font-medium text-gray-700 hover:text-lime-600 transition-colors"
-              >
-                Home
-              </Link>
-              <Link 
-                href="/media" 
-                className="text-sm font-medium text-gray-700 hover:text-sky-600 transition-colors"
-              >
-                Sfeerimpressie
-              </Link>
-              <Link
-                href="/inschrijven-tennis-les"
-                className="text-sm font-medium text-gray-700 hover:text-emerald-600 transition-colors"
-              >
-                Inschrijven tennisles
-              </Link>
-              <Link
-                href="/inschrijven-activiteit"
-                className="text-sm font-medium text-gray-700 hover:text-violet-600 transition-colors"
-              >
-                Inschrijven activiteit
-              </Link>
-              <Link 
-                href="/inschrijven" 
-                className="text-center text-xs lg:text-sm font-bold px-3 py-2 lg:px-4 rounded-lg text-white transition-all shadow-md hover:shadow-lg leading-snug max-w-[12rem] lg:max-w-none"
-                style={{ background: 'linear-gradient(135deg, #22c55e 0%, #4ade80 100%)' }}
-              >
-                Meld je aan voor het tenniskamp
-              </Link>
+            <div className="hidden md:flex items-center gap-5 lg:gap-6">
+              {NAV_LINKS.map(({ href, label }) => (
+                <Link
+                  key={href}
+                  href={href}
+                  className="text-sm font-medium text-gray-700 hover:text-emerald-700 transition-colors"
+                >
+                  {label}
+                </Link>
+              ))}
             </div>
           </nav>
 
-          {/* Right side - Hamburger menu on mobile */}
           <div className="flex items-center gap-3">
-            {/* Mobile Menu Toggle - Right side */}
             <button
               onClick={toggleMenu}
-              className="md:hidden text-gray-700 hover:text-lime-600 transition-colors"
+              className="md:hidden text-gray-700 hover:text-emerald-700 transition-colors"
               aria-label="Menu toggle"
               aria-expanded={isMenuOpen}
             >
@@ -81,45 +61,19 @@ const Navbar = () => {
           </div>
         </div>
 
-        {/* Mobile Dropdown Menu */}
         {isMenuOpen && (
           <div className="md:hidden border-t border-gray-200 bg-white">
             <div className="px-4 py-4 space-y-3">
-              <Link
-                href="/"
-                onClick={() => setIsMenuOpen(false)}
-                className="block text-base font-medium text-gray-700 hover:text-lime-600 transition-colors"
-              >
-                Home
-              </Link>
-              <Link
-                href="/media"
-                onClick={() => setIsMenuOpen(false)}
-                className="block text-base font-medium text-gray-700 hover:text-sky-600 transition-colors"
-              >
-                Sfeerimpressie
-              </Link>
-              <Link
-                href="/inschrijven-tennis-les"
-                onClick={() => setIsMenuOpen(false)}
-                className="block text-base font-medium text-gray-700 hover:text-emerald-600 transition-colors"
-              >
-                Inschrijven tennisles
-              </Link>
-              <Link
-                href="/inschrijven-activiteit"
-                onClick={() => setIsMenuOpen(false)}
-                className="block text-base font-medium text-gray-700 hover:text-violet-600 transition-colors"
-              >
-                Inschrijven activiteit
-              </Link>
-              <Link
-                href="/inschrijven"
-                onClick={() => setIsMenuOpen(false)}
-                className="block text-base font-bold text-lime-600 hover:text-lime-700 transition-colors"
-              >
-                Meld je aan voor het tenniskamp
-              </Link>
+              {NAV_LINKS.map(({ href, label }) => (
+                <Link
+                  key={href}
+                  href={href}
+                  onClick={() => setIsMenuOpen(false)}
+                  className="block text-base font-medium text-gray-700 hover:text-emerald-700 transition-colors"
+                >
+                  {label}
+                </Link>
+              ))}
             </div>
           </div>
         )}

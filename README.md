@@ -1,20 +1,10 @@
-# Tennis Connect – Kamp Oostvoorne
+# Tennis Connect – Kids Tennis TVO Oostvoorne
 
-Website for the Tennis & Padel summer camp in Oostvoorne (Tennis Connect). Built with Next.js.
+Website for the Kids Tennis / Tenniskids TOF youth program at TVO Oostvoorne (Tennis Connect). Built with Next.js.
 
-## Run locally
+## Focus
 
-```bash
-npm install
-npm run dev
-```
-
-Open [http://localhost:3000](http://localhost:3000).
-
-## Deploy
-
-The project can be deployed to Vercel or any Node.js host. See `package.json` for build scripts.
-
----
-
-© 2xGen / Tennis Connect
+- Startpagina met categorieën Rood, Oranje & Groen
+- Basispakket (€ 170) en Totaalpakket (€ 240) — 13 weken
+- Vrijdag Speelmoment-programma en Tofscore / spelerskaart
+- Proeflessen & inschrijven via WhatsApp
