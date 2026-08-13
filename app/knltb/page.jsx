@@ -11,10 +11,10 @@ export const metadata = {
     siteName: 'Tennis Connect',
     images: [
       {
-        url: 'https://toftennis.nl/wp-content/uploads/2024/04/TOF-logo.svg',
-        width: 800,
-        height: 600,
-        alt: 'Tennis Connect Tenniskids',
+        url: 'https://iemgpccgdlwpsrsjuumo.supabase.co/storage/v1/object/public/TOF%20Sports/herkenbaar.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Kids Tennis TVO Oostvoorne · Tenniskids TOF',
       },
     ],
     locale: 'nl_NL',

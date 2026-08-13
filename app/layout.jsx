@@ -30,11 +30,20 @@ export const metadata = {
     locale: 'nl_NL',
     images: [
       {
-        url: 'https://soaacpusdhyxwucjhhpy.supabase.co/storage/v1/object/public/tennis%20connect%20kamp/tennis%20foto.jpeg',
+        url: 'https://iemgpccgdlwpsrsjuumo.supabase.co/storage/v1/object/public/TOF%20Sports/herkenbaar.jpg',
         width: 1200,
         height: 630,
-        alt: 'Kids Tennis TVO Oostvoorne',
+        alt: 'Kids Tennis TVO Oostvoorne · Tenniskids TOF',
       },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Kids Tennis op TVO Oostvoorne',
+    description:
+      'Tenniskids TOF bij TVO Oostvoorne. Vaste pakketten, Vrijdag Speelmoment en Tofscore-spaarprogramma voor kids.',
+    images: [
+      'https://iemgpccgdlwpsrsjuumo.supabase.co/storage/v1/object/public/TOF%20Sports/herkenbaar.jpg',
     ],
   },
 };
