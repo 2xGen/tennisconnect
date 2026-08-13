@@ -5,12 +5,16 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Menu, X } from 'lucide-react';
 
+const GOOGLE_FORM_URL =
+  'https://docs.google.com/forms/d/e/1FAIpQLSdv8c0sMH430_yaxb-ai5sZVCavUDOGwIlLJRYvo18Zl03Imw/viewform?usp=dialog';
+
 const NAV_LINKS = [
   { href: '/', label: 'Home' },
   { href: '/#categorieen', label: 'Categorieën' },
   { href: '/#pakketten', label: 'Pakketten' },
   { href: '/#proeflessen', label: 'Proeflessen' },
   { href: '/inschrijven-tennis-les', label: 'Inschrijven' },
+  { href: GOOGLE_FORM_URL, label: 'Inschrijfformulier', external: true },
 ];
 
 const Navbar = () => {
@@ -37,15 +41,27 @@ const Navbar = () => {
 
           <nav className="flex-1 flex justify-center">
             <div className="hidden md:flex items-center gap-5 lg:gap-6">
-              {NAV_LINKS.map(({ href, label }) => (
-                <Link
-                  key={href}
-                  href={href}
-                  className="text-sm font-medium text-gray-700 hover:text-emerald-700 transition-colors"
-                >
-                  {label}
-                </Link>
-              ))}
+              {NAV_LINKS.map(({ href, label, external }) =>
+                external ? (
+                  <a
+                    key={href}
+                    href={href}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="text-sm font-semibold text-emerald-700 hover:text-emerald-900 transition-colors"
+                  >
+                    {label}
+                  </a>
+                ) : (
+                  <Link
+                    key={href}
+                    href={href}
+                    className="text-sm font-medium text-gray-700 hover:text-emerald-700 transition-colors"
+                  >
+                    {label}
+                  </Link>
+                )
+              )}
             </div>
           </nav>
 
@@ -64,16 +80,29 @@ const Navbar = () => {
         {isMenuOpen && (
           <div className="md:hidden border-t border-gray-200 bg-white">
             <div className="px-4 py-4 space-y-3">
-              {NAV_LINKS.map(({ href, label }) => (
-                <Link
-                  key={href}
-                  href={href}
-                  onClick={() => setIsMenuOpen(false)}
-                  className="block text-base font-medium text-gray-700 hover:text-emerald-700 transition-colors"
-                >
-                  {label}
-                </Link>
-              ))}
+              {NAV_LINKS.map(({ href, label, external }) =>
+                external ? (
+                  <a
+                    key={href}
+                    href={href}
+                    target="_blank"
+                    rel="noreferrer"
+                    onClick={() => setIsMenuOpen(false)}
+                    className="block text-base font-semibold text-emerald-700 hover:text-emerald-900 transition-colors"
+                  >
+                    {label}
+                  </a>
+                ) : (
+                  <Link
+                    key={href}
+                    href={href}
+                    onClick={() => setIsMenuOpen(false)}
+                    className="block text-base font-medium text-gray-700 hover:text-emerald-700 transition-colors"
+                  >
+                    {label}
+                  </Link>
+                )
+              )}
             </div>
           </div>
         )}

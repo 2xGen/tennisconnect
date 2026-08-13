@@ -38,8 +38,8 @@ const TOFSCORE_IMAGES = [
     alt: 'Kinderen bij het Tofscore-scorebord op de club',
   },
   {
-    src: 'https://toftennis.nl/wp-content/uploads/2021/05/e85e3afa-a4cd-4e9b-bd2f-eb4fd149df18-1024x768.jpg',
-    alt: 'Tenniskids spelerskaarten Rood, Oranje en Groen aan een TOF-koord',
+    src: 'https://iemgpccgdlwpsrsjuumo.supabase.co/storage/v1/object/public/TOF%20nieuwe%20fotos/project-tenniskidstof-video-1-poster.jpg',
+    alt: 'Tenniskids TOF spelerskaart met fases en levels',
   },
 ];
 
@@ -287,6 +287,7 @@ function CategoryAccordion() {
 
 export default function HomePage() {
   return (
+    <>
     <main className="overflow-x-hidden">
       {/* Hero */}
       <section className="relative min-h-[92vh] flex items-end md:items-center overflow-hidden pt-20">
@@ -454,28 +455,37 @@ export default function HomePage() {
 
           <motion.div
             {...fadeInUp}
+            className="mb-8 rounded-2xl border border-amber-200 bg-amber-50/70 p-5 shadow-sm md:p-6"
+          >
+            <h3 className="text-base font-bold text-gray-900">Belangrijk bij herinschrijving</h3>
+            <p className="mt-2 text-sm leading-relaxed text-gray-700">
+              Had je voor de zomervakantie al les? Dan behoud je in principe dezelfde lesdag en
+              lestijd. <strong>Oranje 2 (woensdag)</strong> verhuist van 14:20–15:10 naar{' '}
+              <strong>15:10–16:00</strong>.
+            </p>
+          </motion.div>
+
+          <motion.div
+            {...fadeInUp}
             className="mb-8 rounded-2xl border border-gray-200 bg-white p-5 shadow-sm md:p-6"
           >
             <h3 className="text-base font-bold text-gray-900">Start &amp; einde per lesdag</h3>
             <p className="mt-2 text-sm text-gray-600">
-              Di t/m vr starten in de week van 9–12 september. Maandag start een week later (15
-              september).
+              Woensdag start op 9 september. Maandag en dinsdag beginnen (en stoppen) een week
+              later. 13 lesweken + 1 week herfstvakantie.
             </p>
             <ul className="mt-4 grid gap-2 text-sm text-gray-700 sm:grid-cols-2">
               <li>
-                <span className="font-semibold text-gray-900">Dinsdag:</span> 9 sep → 15 dec
+                <span className="font-semibold text-gray-900">Woensdag:</span> 9 sep → 16 dec
               </li>
               <li>
-                <span className="font-semibold text-gray-900">Woensdag:</span> 10 sep → 16 dec
+                <span className="font-semibold text-gray-900">Vrijdag:</span> 11 sep → 18 dec
               </li>
               <li>
-                <span className="font-semibold text-gray-900">Donderdag:</span> 11 sep → 17 dec
+                <span className="font-semibold text-gray-900">Maandag:</span> 14 sep → 21 dec
               </li>
               <li>
-                <span className="font-semibold text-gray-900">Vrijdag:</span> 12 sep → 18 dec
-              </li>
-              <li className="sm:col-span-2">
-                <span className="font-semibold text-gray-900">Maandag:</span> 15 sep → 21 dec
+                <span className="font-semibold text-gray-900">Dinsdag:</span> 15 sep → 22 dec
               </li>
             </ul>
           </motion.div>
@@ -491,7 +501,7 @@ export default function HomePage() {
               <p className="mt-2 text-3xl font-bold tabular-nums text-gray-900">€ 170,-</p>
               <p className="mt-2 text-gray-600">1× per week training</p>
               <ul className="mt-5 space-y-2 border-t border-gray-100 pt-5 text-gray-700">
-                <li>· 13 weken in Rood, Oranje of Groen</li>
+                <li>· 13 weken in Rood, Oranje, Groen of Geel</li>
                 <li>· Techniek, spelinzicht en meters maken</li>
               </ul>
             </motion.article>
@@ -508,14 +518,13 @@ export default function HomePage() {
               </p>
               <p className="mt-2 text-3xl font-bold tabular-nums text-gray-900">€ 240,-</p>
               <p className="mt-2 text-gray-600">
-                Training + elke vrijdag het Speelmoment
+                Training + 13 vrijdagse speelmomenten
               </p>
               <ul className="mt-5 space-y-2 border-t border-emerald-100 pt-5 text-gray-700">
-                <li>· 13 weken training én elke vrijdag meespelen</li>
                 <li>
-                  · Voor <strong>€ 70,-</strong> extra (een tweede trainingsuur apart zou € 170,-
-                  kosten)
+                  · Speelmomenten t.w.v. <strong>€ 130,-</strong> (los € 10 per keer)
                 </li>
+                <li>· Alleen voor Rood / Oranje / Groen — niet voor Tennis Kids Geel</li>
               </ul>
             </motion.article>
           </div>
@@ -536,7 +545,7 @@ export default function HomePage() {
             <p className="mt-4 text-lg leading-relaxed text-gray-700">
               Tennis leer je door te spelen, niet alleen door te trainen. Op vrijdag maken we meters
               in wedstrijdvormen en spelletjes. Start{' '}
-              <strong>12 september</strong>, laatste keer <strong>18 december</strong>. Omdat
+              <strong>11 september</strong>, laatste keer <strong>18 december</strong>. Omdat
               iedereen vooraf is aangemeld, is er een vaste groep — en dat merk je meteen.
             </p>
           </motion.div>
@@ -793,5 +802,21 @@ export default function HomePage() {
         </div>
       </section>
     </main>
+
+    <a
+      href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHATSAPP_MESSAGE)}`}
+      target="_blank"
+      rel="noreferrer"
+      className="fixed z-50 flex h-14 items-center gap-2 rounded-full bg-[#25D366] pl-4 pr-5 text-white shadow-lg ring-2 ring-white/90 transition hover:bg-[#20bd5a] hover:shadow-xl focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-700 focus-visible:ring-offset-2"
+      style={{
+        bottom: 'max(1.25rem, env(safe-area-inset-bottom, 0px))',
+        right: 'max(1rem, env(safe-area-inset-right, 0px))',
+      }}
+      aria-label="WhatsApp Remco: vraag over Kids Tennis"
+    >
+      <MessageCircle className="h-6 w-6 shrink-0" aria-hidden />
+      <span className="hidden text-sm font-bold sm:inline">WhatsApp Remco</span>
+    </a>
+    </>
   );
 }
