@@ -91,16 +91,6 @@ const Footer = () => {
                   Inschrijven
                 </Link>
               </li>
-              <li>
-                <a
-                  href="https://docs.google.com/forms/d/e/1FAIpQLSdv8c0sMH430_yaxb-ai5sZVCavUDOGwIlLJRYvo18Zl03Imw/viewform?usp=dialog"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="text-gray-600 hover:text-emerald-800 transition-colors text-sm font-semibold"
-                >
-                  Inschrijfformulier
-                </a>
-              </li>
             </ul>
           </div>
 

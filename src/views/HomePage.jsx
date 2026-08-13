@@ -8,8 +8,6 @@ import {
   ChevronDown,
   Sparkles,
   Trophy,
-  Users,
-  MessageCircle,
   Ruler,
 } from 'lucide-react';
 
@@ -43,9 +41,8 @@ const TOFSCORE_IMAGES = [
   },
 ];
 
-const WHATSAPP_NUMBER = '31622616535';
-const WHATSAPP_MESSAGE =
-  'Hoi Remco, ik wil graag meer info over Kids Tennis / de proeflessen bij TVO Oostvoorne.';
+const GOOGLE_FORM_URL =
+  'https://docs.google.com/forms/d/e/1FAIpQLSdv8c0sMH430_yaxb-ai5sZVCavUDOGwIlLJRYvo18Zl03Imw/viewform?usp=dialog';
 
 const fadeInUp = {
   initial: { opacity: 0, y: 28 },
@@ -287,7 +284,6 @@ function CategoryAccordion() {
 
 export default function HomePage() {
   return (
-    <>
     <main className="overflow-x-hidden">
       {/* Hero */}
       <section className="relative min-h-[92vh] flex items-end md:items-center overflow-hidden pt-20">
@@ -748,32 +744,18 @@ export default function HomePage() {
 
           <motion.div
             {...fadeInUp}
-            className="flex flex-col gap-4 rounded-2xl border border-emerald-200 bg-emerald-50/60 p-6 md:flex-row md:items-center md:justify-between md:p-8"
+            className="rounded-2xl border border-emerald-200 bg-emerald-50/60 p-6 text-center md:p-8"
           >
-            <div>
-              <div className="mb-2 flex items-center gap-2 text-emerald-800">
-                <Users className="h-5 w-5" />
-                <span className="font-bold">Racket te leen</span>
-              </div>
-              <p className="text-gray-700">
-                Voor de proeflessen hebben wij een racket. Vragen of aanmelden? Mail{' '}
-                <a
-                  href="mailto:info@tennisconnect.nl"
-                  className="font-semibold text-emerald-800 underline underline-offset-2"
-                >
-                  info@tennisconnect.nl
-                </a>{' '}
-                of app Remco.
-              </p>
-            </div>
+            <p className="text-gray-700">
+              Aanmelden of proeflessen? Vul het inschrijfformulier in.
+            </p>
             <a
-              href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHATSAPP_MESSAGE)}`}
+              href={GOOGLE_FORM_URL}
               target="_blank"
               rel="noreferrer"
-              className="inline-flex shrink-0 items-center justify-center gap-2 rounded-xl bg-[#25D366] px-5 py-3 font-semibold text-white shadow-sm transition hover:bg-[#20bd5a]"
+              className="mt-4 inline-flex items-center justify-center rounded-xl bg-emerald-700 px-6 py-3 font-semibold text-white transition hover:bg-emerald-800"
             >
-              <MessageCircle className="h-5 w-5" />
-              WhatsApp Remco
+              Naar inschrijfformulier
             </a>
           </motion.div>
         </div>
@@ -802,21 +784,5 @@ export default function HomePage() {
         </div>
       </section>
     </main>
-
-    <a
-      href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHATSAPP_MESSAGE)}`}
-      target="_blank"
-      rel="noreferrer"
-      className="fixed z-50 flex h-14 items-center gap-2 rounded-full bg-[#25D366] pl-4 pr-5 text-white shadow-lg ring-2 ring-white/90 transition hover:bg-[#20bd5a] hover:shadow-xl focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-700 focus-visible:ring-offset-2"
-      style={{
-        bottom: 'max(1.25rem, env(safe-area-inset-bottom, 0px))',
-        right: 'max(1rem, env(safe-area-inset-right, 0px))',
-      }}
-      aria-label="WhatsApp Remco: vraag over Kids Tennis"
-    >
-      <MessageCircle className="h-6 w-6 shrink-0" aria-hidden />
-      <span className="hidden text-sm font-bold sm:inline">WhatsApp Remco</span>
-    </a>
-    </>
   );
 }

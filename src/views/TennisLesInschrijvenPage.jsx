@@ -3,16 +3,12 @@
 import React from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { ArrowLeft, MessageCircle } from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
 
 const fadeUp = {
   initial: { opacity: 0, y: 16 },
   animate: { opacity: 1, y: 0 },
 };
-
-const WHATSAPP_NUMBER = '31622616535';
-const WHATSAPP_MESSAGE =
-  'Hoi Remco, ik heb een vraag over Kids Tennis bij TVO Oostvoorne.';
 
 const GOOGLE_FORM_URL =
   'https://docs.google.com/forms/d/e/1FAIpQLSdv8c0sMH430_yaxb-ai5sZVCavUDOGwIlLJRYvo18Zl03Imw/viewform?usp=dialog';
@@ -59,7 +55,6 @@ const LESSON_SLOTS = [
 
 export default function TennisLesInschrijvenPage() {
   return (
-    <>
       <main className="min-h-screen pt-24 pb-16 relative overflow-hidden">
         <div
           className="absolute inset-0 -z-10"
@@ -233,16 +228,16 @@ export default function TennisLesInschrijvenPage() {
             transition={{ duration: 0.4, delay: 0.25 }}
             className="mt-6 text-center text-sm text-gray-600"
           >
-            Vragen? App{' '}
+            Vragen? Vul het{' '}
             <a
-              href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHATSAPP_MESSAGE)}`}
+              href={GOOGLE_FORM_URL}
               target="_blank"
               rel="noreferrer"
               className="font-medium text-emerald-800 underline underline-offset-2"
             >
-              Remco
+              inschrijfformulier
             </a>{' '}
-            of mail{' '}
+            in of mail{' '}
             <a
               href="mailto:info@tennisconnect.nl"
               className="font-medium text-emerald-800 underline underline-offset-2"
@@ -253,21 +248,5 @@ export default function TennisLesInschrijvenPage() {
           </motion.p>
         </div>
       </main>
-
-      <a
-        href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHATSAPP_MESSAGE)}`}
-        target="_blank"
-        rel="noreferrer"
-        className="fixed z-50 flex h-14 items-center gap-2 rounded-full bg-[#25D366] pl-4 pr-5 text-white shadow-lg ring-2 ring-white/90 transition hover:bg-[#20bd5a] hover:shadow-xl focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-700 focus-visible:ring-offset-2"
-        style={{
-          bottom: 'max(1.25rem, env(safe-area-inset-bottom, 0px))',
-          right: 'max(1rem, env(safe-area-inset-right, 0px))',
-        }}
-        aria-label="WhatsApp Remco: vraag over Kids Tennis"
-      >
-        <MessageCircle className="h-6 w-6 shrink-0" aria-hidden />
-        <span className="hidden text-sm font-bold sm:inline">Vraag? WhatsApp</span>
-      </a>
-    </>
   );
 }
